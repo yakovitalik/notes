@@ -1,0 +1,6 @@
+В классе SpringCinfig добавляем метод
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/sources/**").addResourceLocations("/sources/");
+        registry.addResourceHandler("/*.html").addResourceLocations("/WEB-INF/");
+    }

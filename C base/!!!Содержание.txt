@@ -1,0 +1,55 @@
+!New file			Пустой файл для копирования
+bookInfo
+boolean				Использование переменной типа _Bool
+Cmpflt				программа сравнивает числа с плавающей запятой
+For_cube			использование цикла for для построения таблицы кубов
+MaxLenStr
+Pok_s_obmenom
+Prog 6.1 KinderHeroes
+Prog1
+Prog2
+Prog8.1_ScanfPrintfDemo
+Prog14.2_DoWhileDemo
+Prog16.1_ BreakDemo
+Prog16.2_ContinueDemo
+Prog17.1_SwitchDemo
+Prog18.1_PutcharDemo
+Prog18.2_GetcharDemo
+Prog19.2_PutsGetsDemo
+Prog20.1_mathDemo
+Prog20.2_randDemo
+Prog21.1_Massiv
+Prog22.1_PoiskMassiv
+Prog22.2_SvyazMassiv
+Prog23.1_BubbleSort
+Prog23.2_SortPoiskMassiv
+Prog24.4_UkazDemo
+Prog25.1_MassivUkaz
+Prog26.1_DinamPamyatDemo
+Prog27.1_StructDemo
+Prog27.2_StructDemo2Ukaz
+Prog28.1_fprintfDemo
+Prog28.2_fgetsDemo
+Prog28.3_DozapisFileDemo
+Prog29.1_ProizvDostupDemo
+Prog29.2_ProizvDostupDemo
+Prog30.1_LocalGlobalVarDemo
+Prog31.1_transToVal
+Prog31.2_TransMassivToFunc
+Prog31.3_transToAdr
+Prog31.4_transNeskPeremToFunc
+Prog32.1_VozvrZnachizFunc
+ProgEf1.1_Hello
+ProgIfDemo
+ProgMassiveDemo
+ProgN1_DuimToSant
+ProgN2_TwoFunc
+ProgN3.1_Platinum
+ProgN3.2_CharCode
+ProgN3.8_TypeSize
+ProverkaParolya
+ReversStr
+Running				Программа подсчета физической активности
+ShellSort
+Summing				Суммирует целые числа, вводимые с клавиатуры в интерактивном режиме
+Помощник C

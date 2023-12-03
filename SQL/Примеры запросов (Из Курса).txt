@@ -1,0 +1,146 @@
+==============================
+	SELECT
+==============================
+
+SELECT band_id, name, year
+FROM band
+WHERE name = 'Metallica';
+
+==============================
+	Создание базы данных
+==============================
+CREATE DATABASE test;
+
+==============================
+	Создание таблицы
+==============================
+	CREATE TABLE
+
+CREATE TABLE band (
+	band_id		INTEGER,
+	name		VARCHAR,
+	year		SMALLINT,
+	comment		VARCHAR
+);
+
+==============================
+Указание первичного ключа
+==============================
+
+CREATE TABLE band (
+	band_id		INTEGER NOT NULL 
+				PRIMARY KEY,
+	name		VARCHAR,
+	year		SMALLINT,
+	comment		VARCHAR
+);
+==============================
+Указание внешнего ключа
+==============================
+CREATE TABLE album (
+	album_id	INTEGER,
+	name		VARCHAR,
+	band_id		INTEGER
+		REFERENCES band(band_id),
+	year		SMALLINT
+);
+
+
+==============================
+Простые запросы SELECT для
+ работы с одной таблицей
+==============================
+
+SELECT * 
+FROM band
+;
+
+SELECT band_id, name, year, comment
+FROM band
+;
+
+SELECT band_id, 
+	name, 
+	year,
+	comment
+FROM band
+;
+
+---------------------
+Выражения
+---------------------
+
+SELECT band_id, 
+	name, 
+	upper(name) as u_name
+FROM band
+;
+Выведет дополнительный столбец с переделанным name у которого буквы
+будут в верхнем регистре
+
+---------------------
+Фильтрация строк
+---------------------
+
+SELECT band_id, name
+FROM band
+WHERE band_id = 93
+;
+
+SELECT *
+FROM band
+WHERE band_id = 93
+;
+
+Запросить 10 строк из таблицы чтобы понять как выглядит база данных
+SELECT *
+FROM band
+LIMIT 10
+;
+
+Более сложное условие WHERE с условием ИЛИ
+SELECT band_id, name
+FROM band
+WHERE
+	band_id = 93 
+	OR band_id = 192
+;
+
+Выбор строк с условием AND (И)
+SELECT *
+FROM band
+WHERE 
+	year < 1980
+  AND comment <>''
+;
+
+SELECT *
+FROM band
+WHERE band_id = 303
+	OR(band_id = 93 AND year = 1981)
+;
+
+Если расставить скобки по -другому, то результат будет другим:
+SELECT *
+FROM band
+WHERE (band_id = 303
+	OR band_id = 93) AND year = 1981
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

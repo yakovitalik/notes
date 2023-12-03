@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: block;
+            margin: 8px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        div {
+            text-align: center;
+            padding: 1rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #eee;
+            border: none;
+            border-radius: 5px;
+        }
+
+        li {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Динамический список задач</h1>
+    <div>
+        <input type="text" placeholder="текст задачи">
+        <button>Добавить задачу</button>
+    </div>
+
+    <ul id="todos"></ul>
+
+    <script src="main.js"></script>
+</body>
+</html>

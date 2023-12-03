@@ -1,0 +1,128 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Для классического Spring приложения
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+================
+Spring-Core
+================
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>6.0.4</version>
+    </dependency>
+
+================
+Spring-Bean
+================
+
+    // это для старых версий Spring. В новых это входит в Spring Context
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>6.0.4</version>
+        </dependency>
+
+================
+Spring-Context
+================
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.0.3</version>
+    </dependency>
+
+**********************************************************************
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Для Spring MVC приложения
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+================
+Spring-Core
+================
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>6.0.3</version>
+    </dependency>
+
+================
+Spring-Context
+================
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.0.3</version>
+    </dependency>
+
+================
+Spring-Web
+================
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>6.0.3</version>
+    </dependency>
+
+================
+Spring-MVC
+================
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>6.0.3</version>
+    </dependency>
+
+================
+Для DispatcherServlet
+================
+<dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+================
+Шаблонизатор Thymeleaf
+================
+
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring5</artifactId>
+      <version>3.0.11.RELEASE</version>
+    </dependency>
+
+================
+Валидатор форм
+================
+
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.1.6.Final</version>
+    </dependency>
+
+
+**********************************************************************
+ПОДКЛЮЧЕНИЕ БАЗ ДАННЫХ
+**********************************************************************
+================
+PostgreSQL
+================
+
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
+================
+JDBC template
+================
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>

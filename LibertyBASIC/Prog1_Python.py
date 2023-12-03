@@ -1,0 +1,5 @@
+﻿print ('This BASIC program mimics a really bad boss.')
+print()
+print ('What is you name?')
+name = input ()
+print ("Hello" + name + ". You're fired! Have a nice day")

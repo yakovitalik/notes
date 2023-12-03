@@ -1,0 +1,194 @@
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////// SPRING SECURITY ////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+При создании приложения, мы как обычно делаем класс сущности Person, создаем БД и 
+в сущности делаем соответсующие аннотации.
+
+Но мы создаем отдельный пакет security, в него добавляем специальный класс - PersonDetails. 
+Это специальный класс-обертка над нашей сущностью Person, через который будет идти работа. 
+Этот класс должен имплементить интерфейс UserDetails из пакета org.springframework.security.core.userdetails.UserDetails.
+В этом классе мы должны реализовать все методы интерфейса.
+
+В класс также необходимо внедрить нашу сущность Person в качестве поля и добавить через конструктор.
+
+Методы, которые нужно реализовать:
+
+Метод для определения списка прав пользователя(опредлеяет, к каким страницам будет даваться доступ нашему пользователю.
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;    // этот метод нужен для авторизации, он будет возвращать коллекцию прав нашего пользователя
+    }
+
+Метод, который должен возвращать пароль пользователя.
+    @Override
+    public String getPassword() {
+        return this.person.getPassword();
+    }
+	
+    // возвращает имя пользователя
+    @Override
+    public String getUsername() {
+        return this.person.getUsername();
+    }
+
+В этих методах пока везде поставим true.
+	// показывает что аккаунт не просрочен
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+	
+	// показывает что аккаунт не заблокирован
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+	
+	// показывает что пароль не просрочен
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+	
+	// показывает что аккаунт включен и работает
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+	
+И еще нужно реализовать свой метод.
+	// метод, который будет возвращать человека в случае успешной аутентификации
+    public Person getPerson() {
+        return this.person;
+    }
+	
+Далее создаем отдельный пакет config, где будет конфигурация Spring Security. 
+В этом пакете создаем новый класс, который будет называться Security Config.
+В этом классе настраивается аутентификация и авторизация, и вообще все, что касается Spring Security.
+Этот класс помечается специальной аннотацией @EnableWebSecurity.
+Этот класс обязательно должен наследовать класс WebSecurityConfigurerAdapter.
+В этом классе добавить метод:
+
+    // Настраивает аутентификацию
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider();
+    }
+	
+И далее нужно реализовать этот метод authenticationProvider().
+Он должен лежать в папке Security - создаем в ней новый класс AuthProviderImpl, пометить его аннотацией @Component.
+В этом классе мы должны реализовать следующую логику:
+он будет плдключаться к базе данных и сравнивать пароль, который приходит с формы, с тем паролем, который лежит в таблице.
+Этот класс должен имплементировать интерфейс AuthenticationProvider(из пакета org.springframework.security.authentication.AuthenticationProvider).
+И мы должны реализвать два метода этого интерфейса. 
+
+    // принимает на вход authentication, и возвращает authentication(объект Principal с данными о пользователе)
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        return null;
+    }
+	
+    // технический метод, нужен спрингу, чтобы понять, для какого объекта Authentication работает AuthProviderImpl.
+	// но если в приложении много аут провайдеров, то в этом методе можно сказать, для каких сценариев этот аут.провайдер.
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return true;	// здесь поставили true, чтобы сказать что этот AuthenticationProvider для всех случаев хорош
+    }
+	
+для работы метода authenticate() нужно реализовать репозиторий и сервис для поиска человека по имени.
+Репозиторий реализуется как обычно, в нем прописывается сигнатура метода для поиска человека по имени. 
+
+Далее создаем сервис PeopleDetailsService, создав пакет services и поместив его туда.
+В отличие от простого сервиса, чтобы Spring Security знал что это сервис поиска людей, этот класс 
+должен реализовать специальный интерфейс UserDetailsService.
+И соответственно мы должны реализовать метод его loadUserByUsername(String username).
+
+Далее внедряем наш PersonDetailsService в AuthProviderImpl полем и в конструткоре. 
+
+
+Итоговый вариант метода аутентификации:
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String username = authentication.getName(); // получили имя пользователя
+
+        // получаем нашего PersonDetails из сервиса(и репозитория)
+        UserDetails personDetails = personDetailsService.loadUserByUsername(username);
+
+        // получаем пароль из формы
+        String password = authentication.getCredentials().toString();
+
+        // сравниваем пароль, который пришел из формы с паролем из БД
+        if (password.equals(personDetails.getPassword()))
+            throw new BadCredentialsException("Неправильный пароль!");
+            // если пароли не совпали, выбрасываем исключение, которое автоматически видит Spring Security
+            // и выдает пользователю соответствующее сообщение
+
+        return new UsernamePasswordAuthenticationToken(personDetails, password, Collections.emptyList());
+        // 3 аргументом метода является список прав пользователя, это еще не реализовано, поэтому возвращаем пустой лист
+    }
+	
+Теперь в Security config внедрим наш AuthProviderImpl authProvider полем и в конструткоре.
+И затем в метод configure() передадим наш authProvider - auth.authenticationProvider(authProvider);
+
+Так будет выглядеть метод.
+    // Настраивает аутентификацию
+    protected void configure(AuthenticationManagerBuilder auth) {
+
+        auth.authenticationProvider(authProvider);
+    }
+
+==============================================================================================================
+Ранее был рассмотрен общий способ реализации аутентификации. Чаще всего он не используется, а используется упрощенный
+==============================================================================================================
+
+В общем случае нам не нужно реализовывать свой класс AuthProviderImpl. Так как мы в классе Details имплементируем интерфейс спринга, 
+спринг сможет напрямую работать с сервисом - Security Config сможет использовать UserDetailsService.
+Это простая аутентификация, которая используется чаще всего, происходит на самом сервере. 
+
+Реализовывать класс AuthProviderImpl и самим возвращать объект Principal треубется только при кастомной аутентификации, 
+которая проводится на удаленном центральном сервере(CAS). При этом пароль чаще всего даже не хранится на нашем сервере. 
+Тогда нам прийдется реализовать свой AuthenticationProvider.
+
+При этом нам нужно убрать из SecurityConfig AuthProviderImpl и добавить PersonDetailsService personDetailsService, а так же
+добавить его через конструктор. Так же изменяем метод.
+
+    // Настраивает аутентификацию
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.userDetailsService(personDetailsService);
+    }
+
+    // При использовании такого способа без своего AuthentificationProvider,
+    // мы должны указать как мы шифруем пароль. Поскольку пока не шифруем, используем это:
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        // означает что пароль никак не шифруется
+        return NoOpPasswordEncoder.getInstance();
+    }
+	
+Все остальное остается таким же. 
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

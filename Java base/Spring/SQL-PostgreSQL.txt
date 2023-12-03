@@ -1,0 +1,135 @@
+==========================================
+Add dependency for PostgreSQL JDBC Driver
+==========================================
+
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
+==========================================
+Configure Data Source Properties
+==========================================
+
+application.properties:
+spring.datasource.url=jdbc:postgresql://localhost:5432/shopme
+spring.datasource.username=postgres
+spring.datasource.password=password
+
+==========================================
+Connect to PostgreSQL Database with Spring JDBC
+==========================================
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+
+----------------------------
+And the following code example is of a Spring Boot console program
+ uses JdbcTemplate to execute a SQL Insert statement:
+----------------------------
+
+package net.codejava;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
+ 
+@SpringBootApplication
+public class SpringJdbcTemplate2PostgreSqlApplication implements CommandLineRunner {
+ 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+     
+    public static void main(String[] args) {
+        SpringApplication.run(SpringJdbcTemplate2PostgreSqlApplication.class, args);
+    }
+ 
+    @Override
+    public void run(String... args) throws Exception {
+        String sql = "INSERT INTO students (name, email) VALUES ("
+                + "'Nam Ha Minh', 'nam@codejava.net')";
+         
+        int rows = jdbcTemplate.update(sql);
+        if (rows > 0) {
+            System.out.println("A new row has been inserted.");
+        }
+    }
+ 
+}
+==========================================
+Connect to PostgreSQL Database with Spring Data JPA
+==========================================
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+----------------------------
+Besides the JDBC URL, username and password, you can also
+ specify some additional properties as follows:
+----------------------------
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL81Dialect
+
+----------------------------
+And you need to code an entity class (a POJO Java class) to map
+ with the corresponding table in the database, as follows:
+----------------------------
+package net.codejava;
+ 
+import javax.persistence.*;
+ 
+@Entity
+@Table(name = "students")
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+ 
+    private String name;
+    private String email;
+ 
+    // getters and setters...
+}
+
+----------------------------
+Then you need to declare a repository interface as follows:
+----------------------------
+package net.codejava;
+ 
+import org.springframework.data.jpa.repository.JpaRepository;
+ 
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+ 
+}
+
+----------------------------
+And then you can use this repository in a Spring MVC
+ controller or business class as follows:
+----------------------------
+
+@Controller
+public class StudentController {
+    @Autowired
+    private StudentRepository studentRepo;
+       
+    @GetMapping("/students")
+    public String listAll(Model model) {
+        List<Studnet> listStudents = studentRepo.findAll();
+        model.addAttribute("listStudents", listStudents);
+           
+        return "students";
+    }
+       
+}
+
+
+

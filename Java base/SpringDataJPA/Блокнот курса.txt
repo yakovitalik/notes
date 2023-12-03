@@ -1,0 +1,94 @@
+////////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Spring Data JPA ///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+Репозиторий с Spring Data JPA:
+@Repository
+public interface PeopleRepository extends JpaRepository<Person, Integer> {
+}
+Где Person - класс сущности, Integer - тип первичного ключа
+
+Здесь уже вместо паттерна DAO используется паттерн Repository.
+
+==========================
+Сервисный слой
+==========================
+Аннотация @Service
+
+
+==========================
+Работа с проектом.
+==========================
+За основу был взят проект hibernate10 из предыдущих курсов. 
+==========================
+Необходимо в pom xml добавить зависимость 
+Spring Data JPA
+==========================
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>2.4.7</version>
+    </dependency>
+	
+Нужно проверять чтобы не было конфликта между версиями. 
+Для этого нужно брать последние версии Spring и Spring Data JPA.
+
+После обновления версии спринга необходимо очистить старые версии. 
+Для этого в Intelij Idea справа открыть вкладку Maven, развернуть список, выбрать пункт Clean 
+и нажать на кнопку run(треугольник), чтобы maven очистил старые зависимости.
+
+Далее меняем конфигурацию(файл SpringConfig). 
+Добавляем аннотацию к классу.
+@EnableJpaRepositories("ru.yakovitalik.springcourse.repositories")
+
+Затем меняем создание бина session.factory на создание бина entityManagerFactoryBean():
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan(("ru.yakovitalik.springcourse.models"));
+
+        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(hibernateProperties());
+
+        return em;
+    }
+
+И меняем второй Bean - hibernateTransactionManager() на transactionManager():
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+
+        return transactionManager;
+    }
+	
+После этого мы уже можем создавать наш репозиторий. 
+Переходим в папку repositories и создаем там интерфейс(это должен быть именно интерфейс).
+Этот интерфейс наследуем(extends) от JpaRepository и задаем параметры <Person, Integer>, 
+а также нужно пометить аннотацией @Repository:
+
+@Repository
+public interface PeopleRepository extends JpaRepository<Person, Integer> {
+}
+
+Создаем пакет services. В нем создаем класс PeopleService.
+Класс помечаем аннотацией @Service и @Transactional(readOnly = true).
+Далее уже над методом, который изменяет информацию в БД мы поставим аннотацию @Transactional. 
+И она будет иметь более высокий приоритет над аннотацией класса(позволит вносить изменения).
+При этом, другие методы для чтения нам не нужно помечать аннотацией @Transactional.
+
+В нашем сервисе внедряем наш репозиторий. 
+И в сервисе пишем код для обращения к репозиторию. 
+
+В репозиториях для сохранения и обновления сущности используется один и тот же метод save.
+После реалицалии CRUD методов в сервисе нам нужно в контроллере убрать DAO и добавить Service. 
+
+=========================================
+Документация по Spring Data JPA (там есть описание методов)
+=========================================
+
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
+
+

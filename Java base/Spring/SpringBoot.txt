@@ -1,0 +1,17 @@
+==================================
+Зависимость для Thymeleaf для SpringBoot
+==================================
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+==================================
+Зависимость для Web для SpringBoot
+==================================
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>

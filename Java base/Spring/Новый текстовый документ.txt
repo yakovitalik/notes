@@ -1,0 +1,38 @@
+
+
+Добавляется в файл pom.xml:
+
+----------------------------------------------
+Для использования аннотации @PostConstruct
+----------------------------------------------
+<dependency>
+<groupId>Javax.annotation</groupId>
+<artifactId>Javax.annotation-api</artifactId>
+<version>1.3.2</version>
+</dependency>
+----------------------------------------------
+Теперь можно определить в классе Parrot следующий метод:
+@Component
+public class Parrot {
+private String name;
+@PostConstruct
+public void init() {
+this.name = "Kiki";
+}
+// Какой-то код
+}
+----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+

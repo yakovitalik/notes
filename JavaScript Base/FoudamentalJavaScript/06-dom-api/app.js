@@ -1,0 +1,70 @@
+//////////////////////////////////////////////////////////////////////////
+// РАБОТА с DOM API
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+// Получение ссылок на html элементы
+//////////////////////////////////////////////////////////////////////////
+document.querySelector('h1');
+document.querySelector('#page-header');          // по id
+document.querySelectorAll('.page-header');       // по классу
+
+document.getElementById('nav-acess');
+document.getElementsByClassName('page-header');
+
+document.getElementsByTagName('li');            // выдаст html-коллекцию
+document.getElementsByTagName('p');
+
+//////////////////////////////////////////////////////////////////////////
+// Свойства html элементов
+//////////////////////////////////////////////////////////////////////////
+
+// const p = $0;
+// p.innerText = "REST API";
+// p.innerHTML;
+
+// const a = $0;
+// a.getAttribute('href');
+// a.setAttribute('target', '_blank');
+ 
+// Но гораздо проще получить атриубт так:
+// a.href;
+// a.href = '/404';
+
+// a.style.color = 'orange';            // сделает ссылку оранжевой
+// a.style.display = 'none';            // сделает ссылку невилимой
+// a.style.display = 'inline';           // снова отобразить ссылку
+
+//////////////////////////////////////////////////////////////////////////
+// Обход html коллекций
+//////////////////////////////////////////////////////////////////////////
+
+const list1 = document.querySelectorAll('li');
+list1.forEach(el => el.className = 'li');
+list1.forEach(el => el.style.display = 'none');
+
+// получим html коллецию(в ней нет forEach)
+const list2 = document.getElementsByTagName('li');
+
+for(let el of list2) {
+    el.style.textTransform = "uppercase";
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Объект classList и работа с ним
+//////////////////////////////////////////////////////////////////////////
+
+// $0.className
+
+// const el = $0;
+
+// el.classList
+// el.classList.add('active');
+// el.classList.remove('active');
+// el.classList.toggle('active');   // true
+
+//////////////////////////////////////////////////////////////////////////
+// Браузерные события
+//////////////////////////////////////////////////////////////////////////
+
+

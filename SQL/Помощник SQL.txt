@@ -1,0 +1,494 @@
+			*******************************
+				Помощник SQL
+			*******************************
+==========================
+Создание новой базы данных
+==========================
+CREATE DATABASE test;
+
+==========================
+Создание таблицы
+==========================
+CREATE TABLE table_name
+(
+	column_name data_type(size),
+	column_name data_type(size)
+);
+
+например:
+
+CREATE TABLE TABLE_1
+(
+	snum integer,
+	name char(10),
+	city char(10),
+	cnum decimal
+);
+**************************
+С первичным ключом:
+CREATE TABLE coursec(
+	c_no text PRIMARY KEY,
+	title text;
+	hours integer
+);
+
+C внешними ключами:
+CREATE TABLE exams(
+	s_id integer REFERENCES students(s_id),
+	c_no text REFERENCES cources(c_no),
+	score integer,
+	CONSTRAINT pk PRIMARY KEY(s_id, c_no)
+);
+
+CONSTRAINT - для ограничения целостности
+==========================
+Изменение таблицы
+==========================
+ALTER TABLE table_name ADD column_name data_type size;
+
+
+==========================
+Заполнение таблицы
+==========================
+INSERT INTO courses(c_no, title, hours)
+VALUES	('CS301', 'Базы данных', 30),
+	('CS305', 'Сети ЭВМ', 60);
+
+**************************
+==========================
+Очистка таблицы
+==========================
+TRUNCATE TABLE table_name;
+
+Очищаем таблицу.
+
+**************************
+
+==========================
+Добавление колонки в таблицу
+==========================
+ALTER TABLE Person ADD COLUMN address varchar NOT NULL;
+
+Добавляем колонку addree в таблицу person.
+
+**************************
+
+==========================
+Удаление таблицы
+==========================
+DROP TABLE table_name;
+
+Удаляет таблицу.
+
+**************************
+==========================
+Извлечение данных таблицы
+==========================
+SELECT * | [DISTINCT | ALL] value_expression
+FROM table_name;
+[WHERE predicate]
+[GROUP BY column_name | integer]
+[HAVING predicate]
+[ORDERBY column_name | integer]
+
+Например:
+SELECT city, name, cnum, snum
+FROM table;
+
+Извлекает все столбцы
+SELECT *
+FROM table;
+
+Извлекает выбранные столбцы
+SELECT city, name
+FROM table;
+
+predicate = условие
+
+SELECT title AS course_title, hours
+FROM courses;
+
+Конструкция AS позволяет переименовать столбец, если это необходимо.
+-------------------------------
+Удаление избыточной информации
+-------------------------------
+DISTINCT - убирает одинаковые строки
+
+Например:
+SELECT DISTINCT city FROM TABLE_1;
+-------------------------------
+Отбор информации по условиям
+------------------------------
+WHERE - используется для отбора информации
+
+Пример:
+SELECT city, name
+FROM TABLE_1
+WHERE city = 'LONDON';
+
+SELECT *
+FROM TABLE_1
+WHERE cnum = 100;
+
+**************************
+==========================
+ОСНОВНЫЕ ТИПЫ ДАННЫХ
+==========================
+Целочисленные
+SMALLINT:	-32768 до +32767
+INTEGER:	-2147483648 до +2147483647
+BIGITNT:	-9223372036854775808 до +9223372036854775807
+
+SELECT 100, 100 + 200
+
+Дробные числа, неточные
+DOUBLE PRECISION:	1E-307 до 1E+308
+REAL:			1E-37 до 1E+37
+
+SELECT 1e6
+
+Дробные числа, точные
+DECIMAL(p,s) / NUMERIC(p,s)
+
+SELECT 1.23
+
+Символьные (текстовые, строковые):
+CHAR(n), CHARACTER(n), 
+VARCHAR(n), CHARACTER VARYING(n),
+TEXT
+
+SELECT 'Hello', 
+	'It"s a pencil',
+	'Hello'||'World'
+
+Дата, время, Дата+Время:
+DATE, 
+TIME,
+TIMESTAMP,
+TIMESTAMP WITH TIME ZONE
+
+SELECT date '2018-01-01',
+		time '23:59:59',
+		timestamp '2018-01-01 23:59:59'
+
+==========================
+ОПЕРАТОРЫ
+==========================
+-------------------------------
+Реляционные
+-------------------------------
+=	Равный
+>	Больше чем
+<	Меньше чем
+>=	Больше чем или равно
+<=	Меньше чем или равно
+<>	Не равно
+
+Пример:
+SELECT *
+FROM TABLE_1
+WHERE rating > 200;	
+
+-------------------------------
+Булевы
+-------------------------------
+AND	И
+OR	ИЛИ
+NOT	НЕ
+
+Примеры в запросах:
+SELECT *
+FROM TABLE_1
+WHERE city = "London" AND rating > 200;
+
+SELECT* 
+FROM TABLE_1
+WHERE city = "London" OR reting > 200;
+
+SELECT *
+FRPM TABLE_1
+WHERE city = "London" OR NOT rating > 200;
+
+-------------------------------
+ОПЕРАТОР IN
+-------------------------------
+Представляет набор значений в которых данное значение может или не может быть включено.
+Если мы хотим найти всех продавцов, которые помещены в Barselona or London, используем следующий запрос:
+
+SELECT *
+FROM TABLE_1
+WHERE city IN('Barcelona', 'London');
+
+SELECT *
+FROM TABLE_1
+WHERE snum IN (1001, 1007, 1004);	
+
+-------------------------------
+ОПЕРАТОР BETWEEN
+-------------------------------
+Определяет диапазон значений
+
+SELECT * 
+FROM TABLE_1
+WHERE comm BETWEEN .10 AND .12;
+
+SELECT * 
+FROM TABLE_1
+WHERE(comm BETWEEN .10 AND .12)
+AND NOT comm IN (.10, .12);
+
+-------------------------------
+ОПЕРАТОР LIKE
+-------------------------------
+* символ подчеркивания (_)	Замещает символ
+* знак процента(%)		Замещает ряд символов
+
+SELECT *
+FROM TABLE_1
+WHERE snake LIKE 'P_ _ I %'
+
+-------------------------------
+ОПЕРАТОР NULL
+-------------------------------
+Выгружает поле не имеющее значения
+
+SELECT *
+FROM TABLE_1
+WHERE city IS NULL;
+
+**************************
+
+==========================
+АГРЕГАТНЫЕ ФУНКЦИИ
+==========================
+* COUNT - считает номера строк( не NULL значения)
+* SUM - производит сумму в выбранном столбце
+* AVG - производит среднее значение
+* MAX - производит максимальное значение в столбце
+* MIN - производит минимальное значение в столбце
+
+Использование агрегатных функций:
+SELECT SUM(comm)
+FROM TABLE_1;
+
+SELECT AVG(comm)
+FROM TABLE_1;
+
+Использование COUNT:
+SELECT COUNT(*)
+FROM TABLE_1;
+
+SELECT COUNT(DISTINCT snum)		// Считает номера всех продацов
+FROM TABLE_1;
+
+Предложение GROUP BY:
+
+SELECT snum, MAX(cnum)
+FROM TABLE_1
+GROUP BY snum;
+
+SELECT snum, odate, MAX(cnum)
+FROM TABLE_1
+GROUP BY snum, odate;
+**************************
+==========================
+Соединения таблиц
+==========================
+Прямое(декартово) произведение таблиц. 
+К каждой строке одной таблицы добавляется каждая строка другой.
+SELECT * FROM courses, exams;
+
+Соединение с условием WHERE:
+SELECT courses.title, exams.s-id, exams.score
+FROM cources, exams
+WHERE cources.c_no = exams.c_no;
+
+
+Запросы можно формулировать и в другом виде, указывая соединения
+с помощью ключевого слова JOIN:
+SELECT students.name, exams.score
+FROM students
+JOIN exams
+ ON students.s_id = exams.s_id
+ AND exams.c_no = 'CS305';
+
+Обе формы эквиваленты. Можно использовать ту, которая представляется более наглядной.
+
+Но чтобы в выборку попали все студенты(в т.ч. и без пары и котореы не сдавали экзамен):
+SELECT students.name, exams.score
+FROM students
+LEFT JOIN exams
+ ON students.s_id = exams.s_id
+ AND exams.c_no = 'CS305';
+
+========================================
+	ПОДЗАПРОСЫ
+========================================
+
+Подзапрос(обычное скалярное выражение)
+SELECT name, 
+	(SELECT score
+	 FROM exams
+	 WHERE exams.s_id = students.s_id
+	 AND exams.c_no = 'CS305')
+FROM students;
+
+Скалярный позапрос в условиях фильтрации:
+SELECT *
+FROM exams
+WHERE	(SELECT start_year
+	FROM students
+	WHERE students.s_id = exams.s_id) > 2014;
+
+Подзапросы, возвращающие произвольное количество строк 
+с отношением IN - проверяет, содержится зи значение в таблице, возвращаемой подзапросом:
+SELECT name, start_year
+FROM students
+WHERE s_id IN (SELECT s_id
+		FROM exams
+		WHERE c_no = 'CS305');
+
+Отношение NOT IN возвращает противоположный результат:
+SELECT name, start_year
+FROM students
+WHERE s_id NOT IN 
+	(SELECT s_id FROM exams WHERE score = 5);
+
+Использование предиката EXISTS, проверяющего, что подзапрос 
+возвратил хотя бы одну строку:
+SELECT name, start_year
+FROM students
+WHERE NOT EXISTS (SELECT s_id
+		FROM exams
+		WHERE exams.s_id = students.s_id
+		AND score = 5);
+
+========================================
+	СОРТИРОВКА (ORDER BY)
+========================================
+После каждого выражения(ключа сортировки необходимо указать направление:
+ASC - по возрастанию (порядок по умолчанию)
+DESX - по убыванию
+
+SELECT *
+FROM exams
+ORDER BY score. s_id, c_no DESC;
+
+
+-------------------------------
+	ГРУППИРОВКА
+-------------------------------
+
+SELECT count(*), count(DISTINCT s_id),
+avg(score)
+FROM exams;
+
+Аналогичную информацию можно получить с помощью GROUP ID:
+SELECT c_no, count(*),
+count(DISTINCT s_id), avg(score)
+FROM exams
+GROUP BY c_no;
+
+С использованием HAVING (условия применяются после группировки)
+SELECT students.name
+FROM students, exams
+WHERE students.s_id = exams.s_id AND exams.score = 5
+GROUP BY students.name
+HAVING count(*) > 1;
+
+========================================
+	ИЗМЕНЕНИЕ и УДАЛЕНИЕ ДАННЫХ
+========================================
+
+UPDATE - изменение данных( указываются новые значения полей, определяемых 
+		предложением WHERE);
+DELETE - удаляет строки из таблицы(указанные предложением WHERE);
+
+
+UPDATE courses
+SET hours = hours * 2
+WHERE c_no = 'CS301';
+
+DELETE FROM exams WHERE score < 5;
+
+
+========================================
+	ТРАНЗАКЦИИ
+========================================
+Транзакция - логически неделимая единица работы.
+
+Расширяем схему данных и распределяем струдентиов по группам. 
+Чтобы в какждой группе был староста. 
+
+Создаем таблицу групп:
+test=# CREATE TABLE groups(
+	g_no text PRIMARY KEY,
+	monitor integer NOT NULL REFERENCES students(s_id)
+);
+
+NOT NULL запрещает нопределенные значения.
+
+Добавляем новый столбец:
+test=# ALTER TABLE students
+ADD g_no text REFERENCES groups(g_no);
+
+Посмотреть, какие стобцы определены в таблице:
+test=# \d students
+
+Посмотреть, какие таблицы вообще присутствуют в базе данных:
+test=# \d
+
+НАчать транзакцию.
+test=# BEGIN
+
+Добавляем группу вместе со старостой
+test=*# INSERT INTO groups(g_no, monitor)
+SELECT 'A-101', s_id
+FROM students
+WHERE name = 'Anna';
+
+* в приглашеинии напоминает о незаврешенной транзакции
+
+Затем открыть новое окно терминала и запустить еще один процесс psql: 
+это будет сеанс, работающий парралельно с первым. 
+
+Теперь переведем всех студентов в созданную группу:
+test=*# UPDATE students SET g_no = 'A-101';
+
+А теперь завершим транзакцию, зафиксировав изменения:
+
+test=*# COMMIT;
+
+
+ПОлезные ком
+
+
+**************************************************************************
+**************************************************************************
+			ПОЛЕЗНЫЕ КОМАНДЫ psql
+**************************************************************************
+
+\?	Справка по командам psql
+\h	Справка по SQL: список достпуных команд или
+	синтакис конкретной комманды
+\x	Переключает традиционный табличный вывод(столбцы и строки) на расширенный
+	(каждый столбец на отдельной строке) и обратно.
+	Удобно для просмотра нескольких широких строк.
+\l	Список баз данных
+\du	Список пользователей
+\dt	Список таблиц
+\di	Список индексов
+\dv	Список представлений
+\df	Список функций
+\dn	Список схем
+\dx	Список установленных расширений
+\dp	Список привелегий
+\d имя	Подробная информация по конкретному объекту базы данных
+\d+имя	И еще более подробная информация по конкретному объекту
+\timing on	Показывать время выполнения операторов
+ 
+\q	ЗАВЕРШЕНИЕ СЕАНСА РАБОТЫ
+
+**************************************************************************
+
+

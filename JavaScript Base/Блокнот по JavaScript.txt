@@ -1,0 +1,1359 @@
+//////////////////////////////////////////////////////////////////////////
+///////////////		БЛОКНОТ по JavaScript		//////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+// Типы данных в JavaScript
+//////////////////////////////////////////////////////////////////////////
+undefined;
+null;
+
+//Boolean
+true;
+false;
+
+//String - строка
+'Hello world!';
+"Hi there";
+`Hello again`;
+
+// Symbol
+
+// Number - число, BigInt
+18;
+3.14;
+NaN;        // Not a number()
+
+// Object - объектный тип
+// объект
+// массив
+// функции
+// ошибка
+//////////////////////////////////////////////////////////////////////////
+// ПЕРЕМЕННЫЕ 
+//////////////////////////////////////////////////////////////////////////
+
+const x = 1000 * 5 + 99 - 6;        // константа
+console.log(x);
+
+const firstName = 'John';
+const lastName = 'Doe';
+
+let age = 33;                       // переменная, которую впоследствии можнго будет менять.
+
+// старый тип, похож на let
+// но она до сих пор актуальна
+var z = 10;
+
+const isAdult = true;               // является ли человек взрослым
+
+//////////////////////////////////////////////////////////////////////////
+// МАТЕМАТИЧЕСКИЕ ОПЕРАЦИИ 
+//////////////////////////////////////////////////////////////////////////
+
+// - (вычитание), + (сложение), * (умножение), / (деление), % (деление по модулю - остаток от деления), 
+// ** (возведение в степень)
+
+// Унарные операторы
+// -, +
+-1
+-0
++0
+0
++"2" // преобразует к обычному числу (2)
++"2 sad"    // NaN
+
+// Конкатенация +
+"Hello " + "world!" // "Hello world!"
+2 + "2" // "22" так как он приведет первую цифру к строке
+
+// Инкремент, декремент
+// --, ++
+// x++ === (x = x+1)
+// ++x === (x = x+1)
+
+let w = 1;
+console.log(w++);   // 1
+console.log(++w);   // 2
+
+// +=, -=, *=, /=
+// x += 4 === (x = x + 4)
+// x *= 2 === (x = x * 2)
+
+x = 3;  // это инструкция
+
+//////////////////////////////////////////////////////////////////////////
+// ЛОГИЧЕСКИЕ ВЫРАЖЕНИЯ 
+//////////////////////////////////////////////////////////////////////////
+
+// >, <, >=, <=, !=, ==
+// === оператор строго сравнения
+// !== строгое не равно
+
+console.log('is 5 > 2', 5 > 2);
+console.log('is 5 < 2', 5 < 2);
+
+console.log('is equal: 5 and 5', 5 == 5 );
+console.log('is equal: 5 and 4', 5 == 4 );
+
+console.log('is equal: 5 and "5"', 5 == "5" );
+console.log('is equal: 5 and "5"', 5 === "5" );
+
+console.log('is not equal: 10 and 8', 10 != 8);
+console.log('is not equal: 10 and "10"', 10 !== '10');
+
+// Составные логические выражения
+// И - && (true, когда оба выражения истинны)
+// ИЛИ - || (true, когда хотя бы одно выражение истинно)
+
+1 === 1 && 2 === 2;    // true
+1 === 1 && 2 === '2';   // false
+1 === 1 && 2 === 2 && 3 === 3 && 4 === 4; // true
+1 === 1 && 2 === 2 && 3 === 3 && 4 === "4"; // false
+
+1 === 2 || 2 === 2;     // true
+1 === 2 || 2 === 3;     // false
+
+// Сочетание И, ИЛИ
+
+1 === 2 || (2 === 3 && 4 === 4);  // false
+2 === 2 || (2 === 3 && 4 === 4);  // true
+
+//////////////////////////////////////////////////////////////////////////
+// УСЛОВНЫЙ ОПЕРАТОР
+//////////////////////////////////////////////////////////////////////////
+
+let age1 =20;
+
+if (age1 >= 18) {
+    console.log("Access granted");  // доступ разрешен
+} else {
+    console.log("Access denied");   // доступ заблокирован
+}
+
+let salary = 2000;
+
+// if (salary > 1500) console.log('I need to improve!');
+
+if (salary > 3000) {
+    console.log('It\'s time to relax');
+} else if (salary > 2500) {
+    console.log('Well, good enough. But I can be better.');
+} else if (salary >= 2000) {
+    console.log('I need to improve.');
+} else {
+    console.log('Not enough!');
+}
+
+//////////////////////////////////////////////////////////////////////////
+// ОПЕРАТОР Switch
+//////////////////////////////////////////////////////////////////////////
+
+let stat = 'idle';
+
+switch (stat) {
+    case 'idle':
+        console.log('Nothing is happening');
+        break;
+    case 'loading': 
+        console.log('Data is loading');
+        break;
+    case 'respond': 
+        console.log('We have data');
+        break;
+    case 'error': 
+        console.log('Someding went wrong');
+        break;
+    default:
+        console.log('Error');
+        break;
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// Тернарный оператор (выражение)
+//////////////////////////////////////////////////////////////////////////
+
+const age2 = 17;
+
+age2 >= 18 ? console.log('Access granted') : console.log('Access denied');
+console.log('Access', age2 >= 18 ? 'granted' : 'denied');
+
+let isAdult2 = age2 >= 18 ? true : false;
+console.log(isAdult2);
+
+let status = "loading";
+let statusNumber = status === 'idle' ? 0 : 1;
+console.log(statusNumber);
+console.log({statusNumber});
+
+
+//////////////////////////////////////////////////////////////////////////
+// Массивы (Arrays)
+//////////////////////////////////////////////////////////////////////////
+
+const arr = [11, 29, 33, 47, 55];
+console.log(arr);
+console.log(arr[0]);
+arr[0] = 18;
+console.log(arr[0]);
+console.log(arr.length);
+console.log(arr[arr.length - 1]);
+
+const strs = ['abc', 'bcd'];
+strs[2] = 'sd';
+console.log(strs);
+
+// Встроенные методы массива
+strs.push('new item');          // добавить элемент в конец массива
+console.log(strs);
+strs.push('new item2');
+console.log(strs);
+console.log(strs.pop());        // удалить элемент с конца массива
+console.log(strs);
+
+
+//////////////////////////////////////////////////////////////////////////
+// Цикл for
+//////////////////////////////////////////////////////////////////////////
+
+for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Объекты
+//////////////////////////////////////////////////////////////////////////
+
+const developer = {
+    name: 'Vasiliy',
+    surname: 'Petrov',
+    age: 30,
+    skills: ['JavaScript', 'TypeScript', 'CSS'],
+    isMaried: false
+};
+
+console.log(developer.name);
+developer.isMaried = true;
+delete developer.isMaried;          // удаление ключа со значением из объекта(этот оператор не кросбраузерный)
+// в Safary с нми могут быть нюансы
+console.log(developer.isMaried);
+
+// доступ по переменной, это второй вариант доступа, либо чере . либо так
+console.log(developer['age']);
+
+//////////////////////////////////////////////////////////////////////////
+// Оператор in
+//////////////////////////////////////////////////////////////////////////
+
+// проверка наличия ключа в объекте
+console.log('name' in developer);
+
+//////////////////////////////////////////////////////////////////////////
+// Цикл for in
+//////////////////////////////////////////////////////////////////////////
+
+// Используется для прохождения по объекту
+for (let prop in developer) {
+    console.log(prop);  // напечатает ключи
+}
+
+for (let prop in developer) {
+    console.log(prop, developer[prop]);  // напечатает ключи и значения
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Цикл for of
+//////////////////////////////////////////////////////////////////////////
+
+// тоже самое, что in, только получает значения элементов а не значения ключей
+
+const numbers = [1, 2, 3, 4, 5];
+for (let number of numbers) {
+    console.log(number);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Методы объекта, контекст(this)
+//////////////////////////////////////////////////////////////////////////
+
+const developer2 = {
+    name: 'Vasiliy',
+    surname: 'Petrov',
+    age: 30,
+    skills: ['JavaScript', 'TypeScript', 'CSS'],
+    isMaried: false,
+    addAge() {
+        this.age++;
+        console.log(this);
+    },
+    getMarried() {
+        this.isMaried = true;
+    },
+    getDivorced() {
+        this.isMaried = false;
+    }
+};
+
+developer2.addAge();
+
+// Методы прототипа Object:
+developer2.hasOwnProperty('name');      // говорит, есть ли у нашего объекта собственное свойство
+
+//////////////////////////////////////////////////////////////////////////
+// Встроенные методы строк
+//////////////////////////////////////////////////////////////////////////
+
+const str = 'Hello World';
+console.log(str.toLowerCase());         // преобразовать буквы к нижнему регистру
+console.log(str.toUpperCase());         // преобразовать буквы к верхнему регистру
+
+// эти методы часто используются, когда мы принимаем пользовательский ввод, 
+// и нам необходимо его с чем то сверить. мы приводим буквы к одному регистру, 
+// чтобы не зависеть от регистра(когда это не требуется)
+
+///////////////
+// Методы, позволяющий проверить, есть ли в строке то или инное слово
+console.log(str.includes('world'));     // вернет булево значение
+
+// ранее использовался другой метод - indexOf(), может до сих пор встречаться в легаси
+console.log(str.indexOf('World'));      // вернет число(6) - индекс начала входения данной подстроки
+
+// можно и так, чтобы не зависеть от регистра
+console.log(str.toLowerCase().includes('world'));
+
+// срез - slice()
+
+console.log(str.slice(0, 5));           // выводит первые пять символов
+console.log(str.slice(6));               // с шестой и до конца строки
+
+// преобразование строик к массиву
+console.log(str.split(' '));               // принимает разделитель (пробел), сделает массив с двумя словами
+
+// а теперь соединим ихз обратно, добавив пробел, знак | и еще один пробел
+console.log(str.split(' ').join(' | ')); 
+
+// chaining - это когда мы применяем несколько методов через точку
+
+// trim() - позволяет удалять пробелы, есть несколько вариантов
+
+//////////////////////////////////////////////////////////////////////////
+// Встроенные методы чисел
+//////////////////////////////////////////////////////////////////////////
+
+const num = 18000.15555;
+
+console.log(num.toFixed());                 // округление, если ничего не передать - отбрасывает дробную часть
+console.log(num.toFixed(2));                // округление до двух точек после запятой
+
+console.log(num.toLocaleString());          // если ничего не передавать, число отпределится в локали по умолчанию
+console.log(num.toLocaleString('ru-Ru'));   // для российской локали
+
+
+//////////////////////////////////////////////////////////////////////////
+// Встроенные методы массивов
+//////////////////////////////////////////////////////////////////////////
+
+const numbers4 = [1, 2, 3, 4];
+
+// pop, push        удаление и вставка элемента в конец массива
+// shift, unshift   добавляют элемент в начало массива или удаляют из начала массива
+
+console.log(numbers4.includes(4));           // проверяет, есть ли в массиве такое значение
+numbers4.indexOf(2);                        // вернет индекс вхождения элемента, если найдет элемент (1)
+numbers4.indexOf(9);            // -1, так как нет такого элемента
+
+console.log(numbers4.slice(0, 2));      // срез, [1, 2]
+
+const nums2 = numbers4.concat([6, 7, 8]);        // конкатенация
+console.log(nums2);
+
+console.log(numbers4.join(', '));       // вернет строку со всеми элементами массива с заданным разделителем
+
+//////////////////////////////////////////////////////////////////////////
+// Объекты ошибки и работа с ошибками
+//////////////////////////////////////////////////////////////////////////
+
+// ReferenceError означает, что мы пытаемся использовать имя или ключ объекта, который не существует
+// SyntaxError означает ошибку в коде, что мы пропустили например скобку или кавычку
+
+// TypeError
+// const x = 1;
+// x();
+
+// Создаем свою ошибку(пробрасываем)
+// throw new Error означает - пробрось новую ошибку
+function sum(a, b) {
+    if(typeof a !== 'number' || typeof b !== 'number') {
+        throw new Error('В функцию не переданы числа для сложения');
+    }
+    return a + b;
+}
+
+// ловим ошибку, чтобы можно было продолжить выполнение программы
+try {
+    sum();
+} catch (err) {
+    console.error(err.message);     // выведем только само сообщение ошибки, без параметров
+}
+
+console.log('End');
+
+//////////////////////////////////////////////////////////////////////////
+// Объект регулярного выражения
+//////////////////////////////////////////////////////////////////////////
+// Два способа создания регулярного выражения
+const regex1 = /\w+/;
+const regex2 = new RegExp('\\w+');      // обратный слэш(\) нужен для экранирования
+
+const str3 = 'JavaScript is cool language. Everybody should learn JavaScript';
+console.log(/JavaScript/.test(str3));   // вернет true или false, в зависимости есть ли искомое слово
+console.log(/javascript/i.test(str3));  // (i) означает искать без учета регистра(тоже вернет булево значение)
+
+// строковые методы для работы с регулярными выражениями
+console.log(str3.replace(/javascript/i, 'php'));    // изменяет только одно вхождение
+console.log(str3.replace(/javascript/gi, 'php'));    // изменяет все вхождения
+
+// g - глобальный поиск(все вхождения), i - без учета регистра
+
+console.log(str3.match(/javascript/gi));         // в отличие от test() вернет массив с информацией или null 
+
+// пример регулярного выражения для валидации email
+const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+};
+
+// то же самое, но в виде функции
+// function validateEmail(email) {
+//     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//     return re.test(String(email).toLowerCase());
+// }
+
+---------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////
+// Функции vs процедуры
+//////////////////////////////////////////////////////////////////////////
+
+// функция, выполняет операции и возвращает значения
+function summ(a, b) {
+    return a + b;
+}
+
+const result = summ(4, 6);
+console.log(result);
+
+// процедура, просто выполняет набор операций и ничего не возвращает
+function sum2(a, b) {
+    console.log(a + b);
+}
+
+// и то и другое в JS является функцией
+
+
+//////////////////////////////////////////////////////////////////////////
+// Варианты записи функций
+//////////////////////////////////////////////////////////////////////////
+
+// 1.Function declaration (Такие функции можно вызывать до их декаларации, и только такие)
+sum4(1, 4);
+function sum4(a, b) {
+    return a + b;
+}
+
+// 2.Function Expression
+const sum = function(a, b) {
+    return a + b;
+}
+
+// 3.IIFE (Immediatly-invoked function expression)
+// (function(a, b) {
+//     return a + b;
+// })(5, 34)
+
+// 4.Arrow function(стрелочные функции)
+const sum5 = (a, b) => {
+    return a + b;
+}
+
+const sum6 = (a, b) => a + b;
+const add1 = x => x + 1;
+
+//////////////////////////////////////////////////////////////////////////
+// Области видимости (Scope)
+//////////////////////////////////////////////////////////////////////////
+
+function isString(str) {
+    const isValid = typeof str === "string";
+    return isValid;
+}
+
+const res = isString('123');
+console.log(res);
+
+// let message = '';
+const age = 15;
+
+if (age >= 18) {
+    let message = "Hello";
+} else {
+    let message = "Adios";
+}
+
+    // console.log(message); // ошибка, переменной не существует
+
+{
+    var myName = "Mikhail";
+}
+
+console.log(myName);
+
+for (let prop in obj) {
+
+}
+// console.log(prop); // ошибка, переменной prop не существует
+
+// если бы она была создана чере var, она бы висела в памяти программы
+
+
+
+//////////////////////////////////////////////////////////////////////////
+// Колбеки (Callback functions) и функции высшего порядка (Higer order functions)
+//////////////////////////////////////////////////////////////////////////
+
+// function twoSquared() {
+//     return 2 * 2;
+// }
+
+// twoSquared();
+
+// function threeSquared() {
+//     return 3 * 3;
+// }
+
+function numSquared(num) {
+    return num * num;
+}
+
+function copyArrayAndSquareNums(arr) {
+    const output = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        output.push(arr[i] ** 2);
+    }
+
+    return output;
+}
+
+const arr1 = [1, 2, 3, 4];
+console.log(arr1);
+
+const arr2 = copyArrayAndSquareNums(arr1);
+console.log(arr2);
+
+function copyArrayAndDivideByTwo(arr) {
+    const output = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        output.push(arr[i] / 2);
+    }
+
+    return output;
+}
+
+// Эта функция, с функцией instructions в качестве параметра делает ненужными две предыдущие функции
+function copyArrayAndDoSmth(arr, instructions) {
+    const output = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        output.push(instructions(arr[i]));
+    }
+
+    return output;
+}
+
+function numSquared(num) {
+    return num * num;
+}
+
+function divideBy2(num) {
+    return num / 2;
+}
+
+const result4 = copyArrayAndDoSmth([5, 6, 7, 8], numSquared);
+console.log(result4);
+
+const result5 = copyArrayAndDoSmth([5, 6, 7, 8], divideBy2);
+console.log(result5);
+
+// здесь numSquared и divideBy2 - это коллбеки;
+// функции высшего порядка - это функции, которые в качестве параметров принимают другие функции, 
+// а так же те функции, которые внутри себя создают другие функции и возвращают их оператором return (замыкание)
+
+//////////////////////////////////////////////////////////////////////////
+// Рекурсия (функция вызывает саму себя)
+//////////////////////////////////////////////////////////////////////////
+
+// Это будет бесконечный цикл
+// function recurse() {
+//     return recurse();
+// }
+// recurse();
+
+// Должно быть 2 вещи у каждой рекурсии
+// 1.Базовое условие (терминальное)
+// 2.Правило движения по рекурсии
+
+function factorial(n) {
+    if (n === 0) return 1;
+
+    return n * factorial(n-1)
+}
+console.log(factorial(5));  // 5 * 4 * 3 * 2 * 1 (120)
+
+let counter = 0;
+// принимает символ и возвращает этот символ в 5 экземплярах
+function repeater(char) {
+    counter++;
+    if (counter === 5) {
+        counter = 0;
+        return char;
+    }
+    return char + repeater(char);
+}
+console.log(repeater('a'));
+//////////////////////////////////////////////////////////////////////////
+// Замыкание в JS (Closure)
+//////////////////////////////////////////////////////////////////////////
+
+// 1.Функции, которые возвращают другие функции
+// 2.Возвращаемая функция запоминает scope(область видимости), все переменные которые она вокруг себя видит
+
+function hello(name) {
+    const helloName = () => console.log("hello", name);
+    return helloName;
+}
+
+const helloWorld = hello("world");
+helloWorld();
+
+const helloJohn = hello("John");
+helloJohn();
+
+
+function outer() {
+    let counter = 0;
+
+    function incrementCounter() {
+        console.log(++counter);
+    }
+
+    return incrementCounter;
+}
+
+const myCounter1 = outer();
+myCounter1();
+myCounter1();
+myCounter1();
+
+const myCounter2 = outer();
+myCounter2();
+myCounter2();
+myCounter2();
+
+//////////////////////////////////////////////////////////////////////////
+// Контекст вызова функции (this)
+//////////////////////////////////////////////////////////////////////////
+
+//THIS
+
+const cat2 = {
+    name: "Murka",
+    say() {
+        // const greeting = () => console.log(this.name);
+        function greeting() {
+            console.log(this.name);
+        }
+
+        setTimeout(greeting, 1000);
+    },
+}
+
+const cat3 = {
+    name: "Murka",
+    say() {
+        // const greeting = () => console.log(this.name);
+        function greeting() {
+            console.log(this);
+        }
+
+        setTimeout(greeting, 1000);
+    },
+}
+
+// в таких вещах нужно использовать стрелочные функции
+
+//////////////////////////////////////////////////////////////////////////
+// Уточнение контекста вызова функции (this)
+//////////////////////////////////////////////////////////////////////////
+
+const developer = {
+    name: "Mikhail",
+    salary: 2500,
+
+    getBonus(sum) {
+        console.log(this.name, "has a salary this month", this.salary + sum);
+    }
+}
+
+// developer.getBonus(250);
+
+const manager = {
+    name: "Anna",
+    salary: 1800,
+
+}
+
+// developer.getBonus.call(manager, 150);
+// developer.getBonus.apply(manager, [150]);
+
+// bind - привязать к этой функции конкретный контекст - объект менеджера
+manager.getBonus = developer.getBonus.bind(manager);
+manager.getBonus(150);
+
+5. СТРУКТУРЫ ДАННЫХ
+
+//////////////////////////////////////////////////////////////////////////
+// Понятие стека и очереди
+//////////////////////////////////////////////////////////////////////////
+
+// FIFO - first in, first out
+// FILO - first in, last out
+
+// Queue (Очередь) - first in, first out
+// push/shift
+console.log("Queue");
+
+const arr = [];
+arr.push(4);
+arr.push(7);
+arr.push(9);
+console.log(arr);
+
+arr.shift();
+console.log(arr);
+// при удалении из очереди все индексы элементов пересчитываются(что дает определенные затраты)
+
+console.log("-----------------------------------------------------");
+
+// Stack (стек) - first in, last out
+// push, pop
+console.log("Stack");
+
+const arr2 = [];
+arr2.push(1);
+arr2.push(2);
+arr2.push(3);
+arr2.push(4);
+arr2.push(5);
+console.log(arr2);
+
+arr2.pop();
+arr2.pop();
+console.log(arr2);
+console.log("-----------------------------------------------------");
+
+// стек является более оптимизированным с точки зрения индексов
+// при удалении элементов не происходит перерасчет индексов
+
+//////////////////////////////////////////////////////////////////////////
+// Понятие иммутабельности (immutable)
+//////////////////////////////////////////////////////////////////////////
+// Иммутабельный - значит неизменяемый
+const arr3 = [1, 2, 3, 4, 5];
+
+// методы pop, push, shift и unshift изменяют структуру оригинального массива
+// не используем методы pop, push, shift и unshift, sort, reverse
+
+const arr4 = arr3.slice(0, 4);  // [1, 2, 3, 4]
+// это будет новый, орригинальный массив, который не заденет старый
+
+const arr5 = [0, ...arr3];      // [0, 1, 2, 3, 4, 5]
+// это будет новый, орригинальный массив, который не заденет старый
+
+console.log(arr3);
+console.log(arr4);
+console.log(arr5);
+
+// ТЕПЕРЬ НА ПРИМЕРЕ ОБЪЕКТОВ
+
+const obj = {
+    a: 1,
+    b: 2,
+    c: 3,
+}
+// Мутации
+// obj.d = 4;       // mutation
+// obj.a = 10;      // mutation
+
+// Immutable
+const obj2 = {
+    ...obj,         // сюда вставятся все значения оригинального объекта
+    a: 10,          // и после этого уже меняем существующий ключ
+    d: 4,           // и добавляем новый ключ
+};  // получим новый объект {a: 10, b: 2, c: 3, d: 4}
+
+console.log(obj);
+console.log(obj2);
+
+
+//////////////////////////////////////////////////////////////////////////
+// Маппинг массивов и коллекций
+//////////////////////////////////////////////////////////////////////////
+
+// map, forEach
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+// эти методы - это как функции высшего порядка, которые выполняются для конкретного массива
+function print(el) {
+    console.log(el);
+}
+const result = numbers.forEach(print);
+console.log(result);
+
+function doubleNum(num) {
+    return num * 2;
+}
+
+const result2 = numbers.map(doubleNum);       // [2, 4, 6 ...]
+
+// или вместо предыдущего можно написать так:
+const result3 = numbers.map(num => num * 2);
+
+console.log(result2);
+console.log(result3);
+console.log(numbers);
+
+//////////////////////////////////////////////////////////////////////////
+// Фильтрация
+//////////////////////////////////////////////////////////////////////////
+
+// Коллекция - это тот же самый массив, только который содержит не примитивы а объекты
+
+const numbers2 = [1, 2, 3, 4, 5, 6, 7, 8];
+
+// filter мы должны вернуть true или false, он также применяет логическое выражение
+// filter так же возвращает новый массив
+const oddNumbers = numbers2.filter(num => num % 2 !== 0);    // [1, 3, 5, 7]
+const evenNumbers = numbers2.filter(num => num % 2 === 0);    // [2, 4, 6, 8]
+console.log(oddNumbers);
+console.log(evenNumbers);
+
+// это коллекция
+const users = [
+    {
+        id: 1,
+        name: "Brad Pete",
+        movies: ['Snatch', 'Inglorius Basterdes'],
+        isMarried: true,
+    },
+    {
+        id: 2,
+        name: "Diana Moore",
+        isMarried: false,
+    },
+    {
+        id: 3,
+        name: "Olivie Giround",
+        isMarried: true,
+    },
+    {
+        id: 4,
+        name: "Scott Parker",
+        isMarried: false,
+    },
+];
+
+
+const marriedUsers = users.filter(user => user.isMarried);
+console.log(marriedUsers);
+
+// includes
+// const snatchUsers = users.filter(user => user.movies.includes('Snatch'));
+// console.log(snatchUsers);
+
+
+//////////////////////////////////////////////////////////////////////////
+// Метод Reduce
+//////////////////////////////////////////////////////////////////////////
+
+const staff = [
+    {
+        id: 1,
+        name: "John Doe",
+        salary: 1000,
+    },
+    {
+        id: 2,
+        name: "Sara Smith",
+        salary: 900,
+    },
+    {
+        id: 3,
+        name: "Elton John",
+        salary: 1100,
+    },
+    {
+        id: 4,
+        name: "Mo Williams",
+        salary: 1000,
+    },
+];
+
+const budget = staff.reduce((acc, user) => {
+    return acc + user.salary;
+}, 0);
+console.log(budget);
+
+const budgetForSmallPersonal = staff.reduce((acc, user) => {
+    if (user.salary < 1000) {
+        return acc + user.salary;
+    }
+
+    return acc;
+}, 0);
+
+console.log(budgetForSmallPersonal);
+
+// создадим из коллекции массив с зарплатами
+const salaries = staff.reduce((acc, user) => {
+    return [...acc, user.salary]
+}, []);
+console.log(salaries);
+
+///////////////////////////////////////////////////////////
+// Работа с конструкторами
+///////////////////////////////////////////////////////////
+
+// Создаем конструктор
+function Dog(name, breed, weight) {
+    this.name = name;
+    this.breed = breed;
+    this.weight = weight;
+
+    // метод
+    this.bark = function() {
+        if (this.weight > 25) {
+            alert(this.name + " says Woof!");
+        } else {
+            alert(this.name + " says Yip!");
+        }
+    }
+}
+
+// создаем объекты через конструктор
+const fido = new Dog("Fido", "Mixed", 38);
+const flaffy = new Dog("Fluffy", "Poodle", 30);
+const spot = new Dog("Spot", "Chihuahua", 10);
+const dogs = [fido, flaffy, spot];
+for (let i = 0; i < dogs.length; i++) {
+    dogs[i].bark();
+} 
+
+//////////////////////////////////////////////////////////////////////////
+// Поиск в коллекции
+//////////////////////////////////////////////////////////////////////////
+
+// поиск в массиве
+const cities = ["London", "Paris", "Madrid", "Lisboa"];
+cities.includes("Madrid");  // true
+cities.indexOf("Paris");    // 1
+
+// поиск в коллекции
+const developers = [
+    {
+        id: 1,
+        fullName: "John Doe",
+        skills: ["HTML", "CSS", "JavsScript"],
+        area: "frontend"
+    },
+    {
+        id: 2,
+        fullName: "Adam Smith",
+        skills: ["HTML", "CSS", "JavsScript", "React"],
+        area: "frontend"
+    },
+    {
+        id: 3,
+        fullName: "Will Dowson",
+        skills: ["HTML", "PHP", "Laravel"],
+        area: "backend"
+    },
+    {
+        id: 4,
+        fullName: "Sam Wilson",
+        skills: ["HTML", "CSS", "JavsScript", "PHP"],
+        area: "fullstack"
+    },
+];
+
+// вернет первый найденный объект(как только наша функция вернет true, элемент будет найден)
+console.log(developers.find((item) => item.area === "frontend"));
+console.log(developers.find((item) => item.skills.includes("React")));
+
+// вернет индекс элемента(или -1, если элемент не найден)
+console.log(developers.findIndex((item) => item.skills.includes("React")));
+
+//////////////////////////////////////////////////////////////////////////
+// Сортировка массива
+//////////////////////////////////////////////////////////////////////////
+// Все методы сортировки муттируют массив
+const developers2 = [
+    {
+        id: 1,
+        fullName: "John Doe",
+        skills: ["HTML", "CSS", "JavsScript"],
+        area: "frontend"
+    },
+    {
+        id: 2,
+        fullName: "Adam Smith",
+        skills: ["HTML", "CSS", "JavsScript", "React"],
+        area: "frontend"
+    },
+    {
+        id: 3,
+        fullName: "Will Dowson",
+        skills: ["HTML", "PHP", "Laravel"],
+        area: "backend"
+    },
+    {
+        id: 4,
+        fullName: "Sam Wilson",
+        skills: ["HTML", "CSS", "JavsScript", "PHP"],
+        area: "fullstack"
+    },
+];
+
+const numbers3 = [1, 2, 3, 4, 10, 12, 23];
+const cities2 = ["Madrid", "Amsterdam", "Paris", "Berlin", "Kiev"];
+
+// по умолчанию сортирует не очень корректно
+numbers3.sort();        // [1, 10, 12, 2, 23, 3, 4]
+console.log(numbers3);
+
+// нормальная сортировка(от меньшего к большему)
+// a, b - поочередно 2 числа из массива, a - b вернет положит, отриц число или 0
+numbers3.sort((a, b) => a - b); // [1, 2, 3, 4, 10, 12, 23]
+console.log(numbers3);
+
+// нормальная сортировка(отбольшего к  меньшему)
+numbers3.sort((a, b) => b - a); // [23, 12, 10, 4, 3, 2, 1]
+console.log(numbers3);
+
+// метод reverse
+numbers3.reverse();
+
+// сортировка при работе со строками(нужно сделать свою сортировочную функцию)
+cities2.sort(sorting);
+console.log(cities2);
+
+function sorting(a, b) {
+    if (a > b) {
+        return 1;
+    }
+    if (a < b) {
+        return -1;
+    }
+    return 0;
+}
+
+// сортировка коллеций(так же нужно сделать свой метод для сортировки по текстовым свойствам)
+
+const developers3 = [
+    {
+        id: 1,
+        fullName: "John Doe",
+        skills: ["HTML", "CSS", "JavsScript"],
+        area: "frontend"
+    },
+    {
+        id: 2,
+        fullName: "Adam Smith",
+        skills: ["HTML", "CSS", "JavsScript", "React"],
+        area: "frontend"
+    },
+    {
+        id: 3,
+        fullName: "Will Dowson",
+        skills: ["HTML", "PHP", "Laravel"],
+        area: "backend"
+    },
+    {
+        id: 4,
+        fullName: "Sam Wilson",
+        skills: ["HTML", "CSS", "JavsScript", "PHP"],
+        area: "fullstack"
+    },
+];
+
+developers3.sort((a, b) => sortingDev(a.area, b.area));
+console.log(developers3);
+
+function sortingDev(a, b) {
+    if (a > b) {
+        return 1;
+    }
+    if (a < b) {
+        return -1;
+    }
+    return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Оператор остатка (...)
+//////////////////////////////////////////////////////////////////////////
+
+const developers4 = [
+    {
+        id: 1,
+        fullName: "John Doe",
+        skills: ["HTML", "CSS", "JavsScript"],
+        area: "frontend"
+    },
+    {
+        id: 2,
+        fullName: "Adam Smith",
+        skills: ["HTML", "CSS", "JavsScript", "React"],
+        area: "frontend"
+    },
+    {
+        id: 3,
+        fullName: "Will Dowson",
+        skills: ["HTML", "PHP", "Laravel"],
+        area: "backend"
+    },
+    {
+        id: 4,
+        fullName: "Sam Wilson",
+        skills: ["HTML", "CSS", "JavsScript", "PHP"],
+        area: "fullstack"
+    },
+];
+
+const numbers4 = [1, 2, 3, 4, 10, 12, 23];
+const cities4 = ["Madrid", "Amsterdam", "Paris", "Berlin", "Kiev"];
+
+// извлечет элементы из cities4 и добавит их в arr6
+const arr6 = ["Riga", ...cities4, "Moscow"];
+console.log(arr6);  // ['Riga', 'Madrid', 'Amsterdam', 'Paris', 'Berlin', 'Kiev', 'Moscow']
+
+// теперь пример с объектами
+const dev1 = {
+    id: 1,
+    fullName: 'John Doe',
+    skills: ['HTML', 'CSS', 'JavsScript'],
+    area: 'frontend'
+}
+
+// каждая пара ключ-значение распаковывается из dev1 в dev2, получается копия
+const dev2 = {...dev1};
+
+sum(...numbers4);
+
+// когда не знаем, сколько параметров может прийти в функцию, args[]
+function sum(a, b, ...args) {
+    let result = a + b;
+    for (let i = 0; i < args.length; i++) {
+        result += args[i];
+    }
+
+    return result;
+}
+
+console.log(sum(4, 3));
+console.log(sum(4, 3, 1));
+console.log(sum(4, 3, 1, 2));
+
+//////////////////////////////////////////////////////////////////////////
+// Деструктуризация массиов
+//////////////////////////////////////////////////////////////////////////
+
+const cities5 = ["Madrid", "Amsterdam", "Paris", "Berlin", "Kiev"];
+
+// создает переменную и кладет в нее элемент из массива cities
+const [madrid, amst, paris] = cities5;
+console.log(madrid, amst, paris);
+
+// с пропуском каких то значений
+const [madr,,, ber, kiev] = cities5;
+console.log(madr, ber, kiev);
+
+//////////////////////////////////////////////////////////////////////////
+// Деструктуризация объектов
+//////////////////////////////////////////////////////////////////////////
+
+const developer2 = {
+    id: 1,
+    fullName: 'John Doe',
+    skills: ['HTML', 'CSS', 'JavaScript'],
+    area: 'frontend',
+    langugages: {
+        english: 'B2',
+        spanish: 'native',
+        hebrew: 'A1'
+    }
+};
+
+// здесь в отличие от массивов порядок не важен, но важно значение ключей
+const {
+    area, 
+    id,
+} = developer2;
+console.log(area, id);
+
+// если такое имя переменной у нас в программе уже есть, то используем синтаксис переименования
+const {
+    area: areaDeveloper, 
+    id: idDeveloper,
+} = developer2;
+console.log(areaDeveloper, idDeveloper);
+
+//////////////////////////////////////////////////////////////////////////
+// Шаблонные строки
+//////////////////////////////////////////////////////////////////////////
+
+const firstName = "John";
+const lastName = "Doe";
+
+console.log(firstName + " " + lastName);
+
+// модифицируем с использованием шаблонных строк(косые кавычки, на букве Ё)
+console.log(`${firstName} ${lastName}`);
+
+// еще пример(шаблонные строик полезны при составлении длинных строк):
+console.log('Hi, my name is ' + firstName + ' ' + lastName + '!');
+console.log(`Hi, my name is ${firstName} ${lastName}!`);
+
+// кроме этого, в шаблонные строки можно вставлять выражения
+console.log(`Hi, my name is ${firstName} ${lastName}! My age is ${2023-1989}`);
+
+// или например получить html строку с динамическими значениями внутри
+const html = `
+    <div>
+        <h1>${firstName} ${lastName}</h1>
+        <button>click me</button>
+    </div>
+`;
+
+//////////////////////////////////////////////////////////////////////////
+// Глобальные методы
+//////////////////////////////////////////////////////////////////////////
+
+// Object
+// .keys - возвращает массив с ключами
+const obj3 = {a: 1, b: 2, c: 3};
+const obj4 = Object.keys(obj3);
+console.log(obj4);  // ['a', 'b', 'c']
+
+// .values - возвращает только значения(без ключей)
+const obj5 = Object.values(obj3);
+console.log(obj5);  // [1, 2, 3]
+
+
+//////////////////////////////////////////////////////////////////////////
+// JSON - javascript object notation
+//////////////////////////////////////////////////////////////////////////
+
+// один объект или массив на файл - файл: config.json
+// в нем нельзя хранить комментарии
+// в JSON нет функций, они не могут в нем храниться
+// хранятся только данные - пары ключ-значение
+
+// при этом, все ключи заключаются в двойные кавычки
+// строковые значения так же помещаются в двойные кавычки
+
+// пример:
+// {
+//     "firstName": "Mikhail",
+//     "age": 36,
+
+//     "skills": ["CSS"],
+//     "languages": {
+//         "key": "value"
+//     }
+// }
+
+const obj6 = {
+    a: 1,
+    b: 2,
+    c:3,
+    print() {console.log('Hello')}
+};
+// пробуем преобразовать объект к строке
+console.log(String(obj6));  // [object Object]
+
+// JSON записан в виде строки
+const a = `{
+    "firstName": "Mikhail",
+    "age": 36,
+
+    "skills": ["CSS"],
+    "languages": {
+        "key": "value"
+    }
+}`;
+
+// чтобы работать с этим как с объектом, мы должны это распарсить
+const myObj = JSON.parse(a);
+console.log(myObj.firstName);
+console.log(myObj);
+
+// обратная операция при запаковке объекта в JSON(при этом методы исчезнут)
+console.log(JSON.stringify(obj6));
+
+
+//////////////////////////////////////////////////////////////////////////
+// РАБОТА с DOM API
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+// Получение ссылок на html элементы
+//////////////////////////////////////////////////////////////////////////
+
+document.querySelector('h1');
+document.querySelector('#page-header');          // по id
+document.querySelectorAll('.page-header');       // по классу
+
+document.getElementById('nav-acess');
+document.getElementsByClassName('page-header');
+
+document.getElementsByTagName('li');            // выдаст html-коллекцию
+document.getElementsByTagName('p');
+
+
+//////////////////////////////////////////////////////////////////////////
+// Свойства html элементов
+//////////////////////////////////////////////////////////////////////////
+
+// const p = $0;
+// p.innerText = "REST API";
+// p.innerHTML;
+
+// const a = $0;
+// a.getAttribute('href');
+// a.setAttribute('target', '_blank');
+ 
+// Но гораздо проще получить атриубт так:
+// a.href;
+// a.href = '/404';
+
+// a.style.color = 'orange';            // сделает ссылку оранжевой
+// a.style.display = 'none';            // сделает ссылку невилимой
+// a.style.display = 'inline';           // снова отобразить ссылку
+
+
+
+

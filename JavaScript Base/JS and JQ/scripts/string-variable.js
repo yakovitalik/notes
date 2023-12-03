@@ -1,0 +1,8 @@
+var username = 'Ç å¨á·Ô ';
+var message = 'ìó¬ÐÞÔ· Ô  Ò·á';
+
+var elName = document.getElementById('name');
+elName.textContent = username;
+
+var elNote = document.getElementById('note');
+elNote.textContent = message;

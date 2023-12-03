@@ -1,0 +1,132 @@
+=====================================================
+	ПОИСК НАИМЕНЬШЕГО ЭЛЕМЕНТА МАССИВА
+=====================================================
++++++++++++++++++++++++++++++++
+на Python
++++++++++++++++++++++++++++++++
+def find Smallest(arr):
+	smallest = arr[0] 			# Для хранения наименьшеrо значения
+	smallest_index = 0 			# Для хранения индекса наименьшеrо значения
+	for i in range(l, len(arr)):
+		if arr[i] < smallest:
+			smallest = arr[i]
+			smallest_index = i
+	return smallest_index
+
++++++++++++++++++++++++++++++++
+на Java
++++++++++++++++++++++++++++++++
+
+public void findSmallest(array)
+{
+	int smallest = array[0];		// Для хранения наименьшеrо значения
+	int smallestIndex = 0;			// Для хранения индекса наименьшеrо значения
+	for(i = 1; i < array.length(); i++)
+	{
+		if(array[i] < smallest)
+		{
+			smallest = array[i];
+			smallestIndex = i;
+		}
+	}
+	return smallestIndex;
+}
+
++++++++++++++++++++++++++++++++
+=====================================================
+		СОРТИРОВКА ВЫБОРОМ
+=====================================================
++++++++++++++++++++++++++++++++
+на Python
++++++++++++++++++++++++++++++++
+def selectionSort(arr): 				# Сортирует массив
+	newArr = []
+	for i in range(len(arr)):
+		smallest = indSmallest(arr) 		# Находит наименьший эпемент в массиве
+		newArr.append(arr.pop(smallest))	# и добавnяет ero в новый массив
+	return newArr
+print selectionSort([5, З, 6, 2, 10])
+
++++++++++++++++++++++++++++++++
+на Java
++++++++++++++++++++++++++++++++
+public void selectionSort(array)			// Сортирует массив
+{
+	int smallest;
+	int smallestIndex;
+	int newArray = new int[];
+
+	for(i = 0; i < array.length(); i++)
+	{
+		smallest = findSmallest(array);		// Находит наименьший эпемент в массиве
+		newArr.add(array.remove(smallest));	// и добавnяет ero в новый массив 
+	}
+	return newArray;
+}
+
++++++++++++++++++++++++++++++++
+=====================================================
+=====================================================
+		БЫСТРАЯ СОРТИРОВКА
+=====================================================
++++++++++++++++++++++++++++++++
+на Python
++++++++++++++++++++++++++++++++
+def quicksort(array):
+	if len(array) < 2:				# Базовый случай: массивы с 0 и 1 элементов
+		return array				# уже "отсортированы"
+	else:
+		pivot = array[0] 
+		less = [i for i in array[l:] if i <= pivot] # Подмассив всех эпементов, меньших опорного
+
+		greater = [ i for i in array [1:] if i > pivot] # Подмассив всех эпементов, больших опорного
+
+		return quicksort(less) + [pivot] + quicksort(greater)
+
+print quicksort([10, 5, 2, З])
+
++++++++++++++++++++++++++++++++
+на Java
++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++
+=====================================================
+		ПОИСК В ШИРИНУ
+=====================================================
++++++++++++++++++++++++++++++++
+на Python
++++++++++++++++++++++++++++++++
+def search(name):
+	search_queue = deque()
+	search_queue += graph(name]
+	searched = [] 				# Этот массив испопьзуется дпя отспеживания
+						# уже проверенных пюдей
+	while search_queue:
+		person = search_queue.popleft() # Чеповек проверяется топько в том спучае,
+		if not person in searched: 	# еспи он не проверяпся ранее
+			if person_is_seller(person):
+				print person +" is а mango seller!"
+				return True
+			else:
+				search_queue += graph[person]	# Чеповек помечается как уже проверенный
+				searched.append(person) 4 · ··
+	return False
+
+search("you")
++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====================================================
+

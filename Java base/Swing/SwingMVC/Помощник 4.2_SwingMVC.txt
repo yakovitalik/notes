@@ -1,0 +1,883 @@
+*******************************************************************************
+				SWING MVC
+*******************************************************************************
+=======================================
+Общее
+=======================================
+
+Размещение текствоого поля(на панели или контейнере):
+var panel = new JPanel();
+var textField = new JTextField("Default input", 20);
+panel.add(textField);
+
+Создание пустого текстового поля:
+var textField = new JTextField(20);
+
+Содержимое текстового поля можно изменить в любой момент, вызвав метод
+setText();
+
+Кнопки переключателей:
+var group = new ButtonGroup();
+var smallButton = new JRadioButton ("Small", false );
+group.add(smallButton);
+var mediumВutton = new JRadioButton("Medium", true);
+group.add(mediumButton);
+. . .
+==============================
+Создание меню
+==============================
+Создание строки меню.
+var = new JМenuBar();
+
+Для расположения меню в резнейчасти фрейма применяем метод:
+frame.setJMenuBar(menuBar);
+
+Для меню создаем объект:
+var editMenu = new JMenu("Edit");
+
+Меню верхнего уровня размещаются в строке меню, как показано ниже.
+menuBar.add(editMenu);
+
+Затем в объект меню вводятся пункты, разделители и подменю:
+var pasteitem = new JМenuitem("Paste");
+editMenu.add(pasteitem);
+editMenu.addSeparator();
+JМenu optionsMenu = ... ; 11 nодменю
+editMenu.add(optionsMenu);
+
+Имеется удобный метод JMenu. add ( String s), позволяющий добавлять новый
+пункт в конце меню, например, так, как показано ниже.
+editMenu.add("Paste");
+
+Создание пункта меню с флажком:
+var readonlyitem; new JCheckBoxMenuitem("Read-only");
+optionsMenu.add(readonlyitem);
+
+
+СОЗДАНИЕ ВСПЛЫВАЮЩЕГО МЕНЮ:
+var popup = new JPopupMenu();
+
+Добавление в негопунктов:
+var itern = new JMenuitern("Cut");
+itern.addActionListener(listener);
+popup.add(itern);
+
+
+Вывод всплывающего меню:
+popup.show(panel, х, у);
+
+Для всплывания
+меню после щелчка кнопкой мыши вызывается следующий метод:
+component.setCornponentPopupMenu(popup);
+
+++++++++++++++++++++++++
+Панели инструментов
+++++++++++++++++++++++++
+Создание панели и добавление к ней компонента
+var bar = new JToolBar();
+toolbar.add(blueButton);
+
+Пиктограмма, соответствующая объекту:
+toolbar.add(blueAction);
+
+Группы кнопок можно отделять друг от друга с помощью разделителей следующим образом:
+toolbar.addSeparator();
+
+Размещение панели инструментов в контейнере:
+add(toolbar, BorderLayout.NORTH);
+
+Имеется также возможносrь указать заголовок панели, который появится, когда
+панель будет обособлена от фрейма. Ниже показано, каким образом заголовок панели
+указывается в коде.
+toolbar = new JToolBar(titleString);
+
+Добавление всплывающей подказки к кнопкам панели:
+exitButon.SetToolTipText("Exit");
+
+++++++++++++++++++++++++
+Диалоговые окна
+++++++++++++++++++++++++
+Методы класса JOptionPane:
+
+ShowMessageDialog()	Выводит на экран сообщение и ожидает до тех пор, пока
+			пользователь не щелкнет на кнопке ОК
+
+ShowConfirmDialog()	Выводит на экран сообщение и ожидает от пользователя
+			подтверждения (щелчок на кнопке ОК или Cancel)
+
+ShowOptionDialog()	Выводит на экран сообщение и предоставляет пользователю
+			возможность выбора среди нескольких вариантов
+
+showinputDialog()	Выводит на экран сообщение и поле, в котором
+			пользователь должен ввести данные
+
+Класс:
+JFileChooser		Позволяет отображать диалоговое окно для манипулирования файлами
+
+
++++++++++++++++++++++++++++++++++++++++
+=======================================
+Свойства интерфейса ButtonModel	
+=======================================
+actionCommand 			Символьная строка команды действия, связанного с экранной кнопкой
+mnemonic			Мнемоническое обозначение экранной кнопки
+armed 				Логическое значение true, если экранная кнопка была нажата , а курсор мыши еще
+				находится на кнопке
+enabled				Логическое з начение true, если экранная кнопка доступна
+pressed				Логическое значение true, если экранная кнопка была нажата , а кнопка мыши еще
+				не отпущена
+rollover			Логическое значение true, если курсор мыши находится на экранной кнопке
+selected			Логическое значение true. если экранная кнопка включена !используется
+				для флажков и кнопок-переключателей!
+***************************************
+
+=======================================
+java.awt.Container
+=======================================
+* void setLayout (Layoutмanager m)
+	Задает диспетчер компоновки для данного контейнера.
+* Component add (Component с)
+* Component add(Component с, Object constraints) 1.1
+	Вводят компонент в данный контейнер и возвращают ссылку на него.
+
+***************************************
+=======================================
+java.awt.FlowLayout
+=======================================
+* FlowLayout()
+* FlowLayout(int align)
+* FlowLayout(int align, int hgap, int vgap)
+	Конструируют новый объект типа FlowLayout. В качестве параметра align задается выравнивание
+	по левому (LEFT) краю, правому (RIGHT) краю или по центру (CENТER).
+
+***************************************
+=======================================
+java.awt.BorderLayout
+=======================================
+* BorderLayout()
+* BorderLayout(int hgap, int vgap)
+	Конструирует новый объект тиnа BorderLayout.
+***************************************
+=======================================
+java.awt.GridLayout
+=======================================
+* GridLayout (int rows, int columns)
+* GridLayout(int rows, int columns, int hgap, int vgap)
+	Создают новый объект типа GridLayout с заданным расстоянием между рядами и столбцами
+	по горизонтали и по вертикали. Один из параметров rows и columns, но не оба сразу, может
+	принимать нулевое значение.
+***************************************
+=======================================
+javax.swing.text.JТextComponent		Текстовые поля
+=======================================
+* String getText ()
+* void setText (String text)
+	Получают и устанавливают текст в данном текстовом компоненте.
+* boolean isEditаblе()
+* void setEditabl(boolean b)
+	Получают и устанавливают свойство editaЫe, определяющее, может ли пользователь редактировать
+	содержимое данного текстового компонента.
+***************************************
+=======================================
+javax.swing.JТextField
+=======================================
+* JТextField (int cols)
+	Создает пустое текстовое поле типа JТextField с заданным числом столбцов.
+* JТextField(String text, int cols)
+	Создает текстовое поле указанных размеров с первоначальной символьной строкой и заданным
+	числом столбцов.
+* int getColumns ()
+* void setColumns (int cols)
+	Получают или устанавливают число столбцов для данного текстового поля.
+***************************************
+=======================================
+javax.swing.JComponent
+=======================================
+* void revalidate ()
+	Обусловливает перерасчет местоположения и размеров компонента.
+* void setFont (Font .f)
+	Устанавливает шрифт для данного компонента.
+***************************************
+=======================================
+java.awt.Component
+=======================================
+* void validate()
+	Обусловливает перерасчет местоположения и размеров компонента. Если компонент является
+	контейнером, местоположение и размеры содержащихся в нем компонентов должны быть также
+	пересчитаны заново.
+* Font getFont()
+	Получает шрифт данного компонента.
+***************************************
+=======================================
+javax.swing.JLabel			Метки и пометка компонентов
+=======================================
+* JLaЬel (String text)
+* JLaЬel (Icon icon)
+* JLaЬel (String text, int align)
+* JLaЬel (String text, Icon icon, int align)
+	Создают метку с текстом и nиктограммой. В качестве nараметра align указывается одна из следующих
+	констант, оnределяемых в интерфейсе SwingConstants: LEFT !no умолчанию), CENTER
+	ИЛИ RIGHT.
+* String getText ()
+* void setтext (String text)
+	Получают или устанавливают текст данной метки.
+* Icon geticon ()
+* void seticon (Icon icon)
+	Получают или устанавливают nиктограмму данной метки.
+***************************************
+=======================================
+javax.swing.JPasswordField		Поля для ввода пароля
+=======================================
+* JPasswordField(String text, int columns)
+	Создает новое nоле для ввода nароля.
+* void setEchoChar (char echo)
+	Задает эхо-символ, который может зависеть от визуального стиля оформления nользовательского
+	интерфейса. Если задано нулевое значение, выбирается эхо-символ no умолчанию.
+* char[] getpassword ()
+	Возвращает текст, содержащийся в nоле для ввода nароля. Для обесnечения большей безоnасности
+	возвращаемый массив следует nерезаnисать nосле исnользования. Пароль возвращается как
+	массив символов, а не как объект тиnа String. Причина такого решения заключается в том, что
+	символьная строка может оставаться в виртуальной машине до тех nop, nока она не будет уничтожена
+	системой сборки "мусора".
+***************************************
+=======================================
+javax.swing.JТextArea		
+=======================================
+• JТextArea ()
+• JТextArea (int rows, int cols)
+JТextArea(String text, int rows, int cols)
+Создают новую текстовую область.
+• void setColumns (int cols)
+Задает предпочтительное число столбцов, определяющее длину строк в текстовой области.
+• void setRows (int rows)
+Задает nредnочтительное число строк в текстовой области.
+• void append (String newТext)
+Добавляет заданный текст в конце содержимого текстовой области.
+• void setLineWrap (boolean wrap)
+Включает и отключает режим автоматического nереноса строк.
+• void setWrapStyleWord(boolean word)
+Если nараметр word nринимает логическое значение true, nеренос в длинных строках выnолняется
+no границам слов, а иначе границы слов во внимание не nринимаются.
+• void setTabSize (int с)
+Устанавливает nозиции табуляции через каждые с символов. Следует, однако. иметь в виду, что
+символы табуляции не nреобразуются в nробелы и лишь выравнивают текст no следующей nозиции
+табуляции.
+=======================================
+javax.swing.JScrollPane		
+=======================================
+* JScrollPane(Component с)
+	Создает панель прокрутки. которая отображает содержимое указанного компонента. Полоса прокрутки
+	появляется лишь в том случае, если компонент крупнее представления.
+***************************************
+=======================================
+javax.swing.JCheckВox				Флажки	
+=======================================
+* JCheckВox(String label)
+* JCheckBox(String label, Icon icon)
+	Создают флажок, который исходно сброшен.
+* JCheckBox(String label, boolean state)
+	Создает флажок с указанной меткой и заданным исходным состоянием.
+* boolean isSelected()
+* void setSelected(boolean state)
+	Получают или устанавливают новое состояние флажка.
+***************************************
+=======================================
+javax.swing.JRadioButton			Кнопки-переключатели
+=======================================
+* JRadioButton(String label, Icon icon)
+	Создает кнопку-переключатель. которая исходно не выбрана.
+* JRadioButton(String label, boolean state)
+	Создает кнопку-переключатель с заданной меткой и в указанном исходном состоянии.
+***************************************
+=======================================
+javax.swing.ButtonGroup
+=======================================
+* void add(AbstractButton b)
+	Вводит кнопку-переключатель в группу.
+* ButtonМodel getSelection()
+	Возвращает модель выбранной кнопки.
+***************************************
+=======================================
+javax.swing.ButtonМodel
+=======================================
+* String getActionCommand()
+	Возвращает команду для модели данной экранной кнопки.
+
+***************************************
+=======================================
+javax.swing.AbstractButton
+=======================================
+* void setActionCommand(String s)
+	Задает команду для данной кнопки и ее модели.
+
+***************************************
+++++++++++++++++++++++++
+========================
+javax.swing.BorderFactory
+========================
+* static Border createLineBorder (Color color)
+* static Border createLineBorder (Color color, int thickness)
+	Создают nростую границу в стиле обычной линии.
+* static мatteBorder createмatteBorder(int top, int left,
+		int bottom, int right, Color color)
+* static мatteBorder createмatteBorder(int top, int left,
+		int bottom, int right, Icon tileicon)
+	Создают широкую границу, заnолняемую цветом или рисунком из nовторяющихся nиктограмм.
+* static Border createEmptyBorder()
+* static Border createEmptyBorder(int top, int left,
+		int bottom, int right)
+	Создают nустую границу.
+* static Border createEtchedВorder()
+* static Border createEtchedВorder (Color highlight, Color shadow)
+* static Border createEtchedВorder(int type)
+* static Border createEtchedВorder (int type, Color highlight,Color shadow)
+	Создают nростую границу в стиле линии с трехмерным эффектом. В качестве nараметра type указывается
+	одна из констант EtchedВorder .RAISED или EtchedВorder .LOWERED.
+* static Border createBevelBorder(int type)
+* static Border createВevelBorder(int type, Color highlight, Color shadow)
+* static Border createLoweredВevelBorder()
+* static Border createRaisedВevelBorder()
+	Создают границу с эффектом утоnленной или nриnоднятой nоверхности. В качестве nараметра
+	type указывается одна из констант BevelBorder. RAISED или BevelBorder. LOWERED.
+* static TitledВorder createTitledВorder(String title)
+* static TitledВorder createTitledВorder(Border border)
+* static TitledВorder createTitledВorder(Border border, String title)
+* static TitledВorder createTitledВorder(Border border,
+		String title, int justification, int position)
+* static TitledВorder createTitledВorder(Border border,
+		String title, int justification, int position, Font font)
+* static TitledВorder createTitledВorder(Border border,
+		String title, int justification, int position, Font font, Color color)
+	Создают границу с заданными свойствами и снабженную заголовком. В качестве nараметра justification
+	указывается одна из следующих констант, оnределяемых в классе Ti tledВorder:
+	LEFT, CENТER, RIGHT, LEADING, TRAILING или DEFAULT_JUSTIFICATION !no левому краю),
+	а качестве nараметра position - одна из констант АВОVЕ ТОР, ТОР, BELOW ТОР, АВОVЕ
+	воттом. BOTTcx.f, BELOW_ВOTTOM или DEFAULT_POSITION !Вверху).
+* static Compound.Вorder createCompoundВorder(Border outsideВorder, Border
+		insideВorder)
+	Объединяет две границы в одну новую границу.
+++++++++++++++++++++++++
+========================
+javax.swing.border.SoftвevelBorder
+========================
+* SoftBevelBorder (int type)
+* SoftBevelBorder(int type, Color highlight, Color shadow)
+	Создают скошенную границу со сглаженными углами. В качестве параметра type указывается
+	одна из следующих констант: SoftвevelBorder. RAISED или SoftвevelBorder. LOWERED.
+++++++++++++++++++++++++
+========================
+javax.swing.border.LineBorder
+========================
+* public LineBorder (Color color, int thickness,
+		boolean roundedCorners)
+	Создает границу в стиле линии заданной толщины и цвета. Если параметр roundedCorners принимает
+	логическое значение true, граница имеет скругленные углы.
+++++++++++++++++++++++++
+========================
+javax.swing.JComponent
+========================
+* void setвorder(Border border)
+	Задает границу для данного компонента.
+++++++++++++++++++++++++
+=======================================
+javax.swing.JComboВox
+=======================================
+* boolean isEditable()
+* void setEditable(boolean b)
+	Получают или устанавливают свойство edi tаЫе данного комбинированного списка.
+* void additem(Object item)
+	Вводит новый элемент в список.
+* void insertitemAt(Object item, int index)
+	Вводит заданный элемент в сnисок no указанному индексу.
+* void removeitem(Object item)
+	Удаляет заданный элемент из списка.
+* void removeitemAt(int index)
+	Удаляет из списка заданный элемент по указанному индексу.
+* void removeAllitems ()
+	Удаляет из списка все элементы.
+* Object getSelecteditem()
+	Возвращает выбранный элемент списка.
+***************************************
+=======================================
+javax.swing.JSlider
+=======================================
+* JSlider()
+* JSlider(int direction)c
+* JSlider(int min, int шах)
+* JSlider(int min, int max, int initialValue)
+* JSlider(int direction, int min, int max, int ini tial Value)
+	Создают горизонтальный регулируемый ползунок с заданным направлением перемещения, минимальным
+	и максимальным значениями. В качестве параметра direction указывается одна
+	из констант SwingConstants. HORIZONТAL или SwingConstants. VERTICAL. По умолчанию
+	устанавливаются значения О, 50 и 100 параметров min, max и initialValue соответственно.
+* void setPaintTicks (boolean b)
+Если параметр b принимает логическое значение true, то отображаются отметки, на которых
+устанавливается ползунок.
+* void setмajorTickSpacing(int units)
+* void setМinorTickSpacing(int units)
+	Устанавливают разные единицы измерения для основных и неосновных отметок .
+	void setPaintLaЬels(boolean b)
+	Если параметр b принимает логическое значение true, то отображаются обозначения меток.
+* void setLaЬelTaЬle (Dictionary table)
+	Устанавливает компоненты для обозначения отметок. Каждая пара "ключ-значение" представлена
+	в таблице в следующей форме:
+* new Integer (значение) / компонент.
+* void setSnapToTicks(boolean b)
+	Если параметр Ь принимает логическое значение true, то ползунок устанавливается на ближайшей
+	отметке после каждого перемещения.
+* void setPaintTrack(boolean b)
+	Если значение параметра Ь принимает логическое значение true, то отображается полоса. по которой
+	перемещается ползунок.
+***************************************
+=======================================
+javax.swing.JМenu
+=======================================
+* JМenu (Strinq label)
+	Создает меню с указанной меткой.
+* JМenuitem add(JМenuitem item)
+	Добавляет пункт !или целое меню!.
+* JМenuitem add (Strinq label)
+	Добавляет пункт в меню с указанной меткой и возвращает этот пункт меню.
+* JМenuitem add (Action а)
+	Добавляет пункт и связанное с ним действие и возвращает этот пункт.
+* void addSepara tor()
+	Добавляет в меню разделитель.
+* JМenuitem insert(JМenuitem menu, int index)
+	Добавляет новый пункт меню !или подменю! по указанному индексу.
+* JМenuitem insert (Action а, int index)
+	Добавляет новый пункт меню и связанный с ним объект типа Action по указанному индексу.
+* void insertSeparator(int index)
+	Добавляет в меню разделитель по указанному индексу.
+* void remove(int index)
+* void remove(JМenuitem item)
+	Удаляют указанный пункт меню.
+***************************************
+=======================================
+javax.swing.JМenuitem
+=======================================
+* JМenuitem (Strinq label)
+	Создает пункт меню с указанной меткой.
+* JМenuitem(Action а)
+	Создает пункт меню для указанного действия.
+***************************************
+=======================================
+javax.swing.AЬstractвutton
+=======================================
+* void setAction(Action а)
+	Устанавливает действие для данной экранной кнопки или пункта меню.
+***************************************
+=======================================
+javax.swing.JFrame
+=======================================
+* void setJМenUВar(JМenUВar menuBar)
+	Устанавливает строку меню в данном фрейме.
+***************************************
+=======================================
+javax.swing.JМenuitem
+=======================================
+* JМenuitem(String label, Icon icon)
+	Создает пункт меню с указанными меткой и пиктограммой.
+***************************************
+=======================================
+javax.swing.AиstractВutton
+=======================================
+* void setнorizontalTextposition (int pos)
+	Задает взаимное расположение текста надписи и пиктограммы. В качестве параметра pos указывается
+	константа SwingConstants. RIGHT !текст справа от пиктограммы! или же константа
+	SwingConstants.LEFT
+***************************************
+=======================================
+javax.swing.AsstractAction
+=======================================
+* AbstractAction(String name, Icon smallicon)
+	Создает объект типа AЬstractAction с указанным именем и пиктограммой.
+***************************************
+=======================================
+javax.swing.JCheckВoxМenuitem			Подпункты меню с кнопками-переключателями
+=======================================
+* JCheckВoxМenuitem(String label)
+	Создает пункт меню с флажком и заданной меткой.
+* JCheckBoxМenuitern(String laЬel, boolean state)
+	Создает пункт меню с флажком и заданными меткой и состоянием (если параметр state принимает
+	логическое значение true, то пункт считается выбранным).
+***************************************
+=======================================
+javax.swing.JRadioButtonМenuitem
+=======================================
+* JRadioButtonМenuitern (String label)
+	Создает пункт меню с кнопкой-переключателем и заданной меткой.
+* JRadioButtonМenuitern(String laЬel, boolean state)
+	Создает пункт меню с кнопкой-переключателем и заданными ме ткой и состоянием !ес ли параметр
+	state принимает логическое значение true, то пункт считается выбранным! .
+***************************************
+=======================================
+javax.swing.Abstractвutton
+=======================================
+* boolean isSelected()
+	Возвращает состояние пункта меню.
+* void setSelected(boolean state)
+	Устанавливает состояние пункта меню !если параметр state принимает логическое значение
+	true, то пункт считается выбранным! .
+***************************************
+=======================================
+javax.swing.JPopupМenu
+=======================================
+* void show(Component с, int х, int у)
+	Отображает всплывающее меню над компонентом, определяемым параметром с, в левом верхнем
+	углу с координатами (х, yJ в пространстве данного компонента.
+* boolean isPopupTrigger (MouseEvent event) 1. З
+	Возвращает логическое значение true, если событие инициировано триггером всплывающего
+	меню (как правило, нажатием правой кнопки мыши!.
+***************************************
+=======================================
+java.awt.event.MouseEvent
+=======================================
+* boolean isPopupTrigger()
+	Возвращает логическое значение true, если данное событие инициировано триггером всплывающего
+	меню (как правило, нажатием правой кнопки мыши).
+
+***************************************
+=======================================
+javax.swing.JComponent
+=======================================
+* JPopupМenu getComponentPopupMenu()
+* void setComponentPopupМenu(JPopupМenu popup)
+	Устанавливают или возвращают всплывающее меню для данного компонента.
+* boolean getInheritsPopupМenu()
+* void setinheritsPopupМenu(boolean b)
+	Устанавливают или возвращают свойство inheritsPopupМenu. Если это свойство установлено,
+	а вместо всплывающего меню данный компонент получает пустое значение null, то вызывается
+	всплывающее меню родительского компонента.
+***************************************
+КЛАВИШИ БЫСТРОГО ДОСТУПА
+=======================================
+javax.swing.JMenuitem
+=======================================
+* JМenuitem(String label, int mnemonic)
+	Создает пункт меню с указанной меткой и клавишей быстрого доступа.
+* void setAccelerator (KeyStroke k)
+	Меню Задает оперативную клавишу k для данного пункта меню. Соответствующая клавиша отображается
+	в меню рядом с меткой данного пункта.
+***************************************
+=======================================
+javax.swing.AЬstractвutton
+=======================================
+* void setмnemonic (int mnemonic)
+	Задает символ, мнемонически обозначающий клавишу быстрого доступа к экранной кнопке. В метке
+	кнопки этот символ подчеркивается .
+* void setDisplayedМnemonicindex(int index)
+	Задает расположение подчеркиваемого символа. Вызывается в том случае, если выделять первое
+	вхождение символа, мнемонически обозначающего клавишу быстрого доступа, нецелесообразно.
+***************************************
+ЗАПРЕТ ОТОБРАЖЕНИЯ ПУНКТОВ МЕНЮ
+=======================================
+javax.swing.JМenuitem
+=======================================
+* void setEnabled(boolean b)
+	Разрешает и заnрещает достуn к nункту меню.
+***************************************
+=======================================
+javax.swing.event.МenuListener
+=======================================
+* void menuSelected(МenuEvent е)
+	Вызывается, когда меню уже выбрано, но еще не открыто.
+* void menuDeselected(MenuEvent е)
+	Вызывается, когда меню уже закрыто.
+* void menuCanceled (MenuEvent е)
+	Вызывается, когда обращение к меню отменено; если. наnример, nользователь щелкнет кноnкой
+	мыши за nределами меню.
+***************************************
+ПАНЕЛИ ИНСТРУМЕНТОВ
+=======================================
+javax.swing.JТoolBar
+=======================================
+* JТoolBar()
+* JТoolBar(String titleString)
+* JТoolBar(int orientation)
+* JТoolBar(String titleString, int orientation)
+	Создают панель инструментов с заданной строкой заголовка и ориентацией. Параметр orientation
+	может принимать значения констант SwingConstants. HORIZONTAL (по умолчанию)
+	и SwingConstants. VERTICAL.
+***************************************
+=======================================
+javax.swing.JТoolBar
+=======================================
+* JВutton add(Action а)
+	Создает новую экранную кнопку на панели инструментов с именем, кратким описанием, пиктограммой
+	и обратным вызовом действия. Экранная кнопка вводится в конце панели инструментов.
+* void addSeparator()
+	Вводит разделитель в конце панели инструментов.
+***************************************
+=======================================
+javax.swing.JComponent
+=======================================
+* void setToolTipText (String text)
+	Задает текст для вывода во всплывающей подсказке, когда курсор мыши наводится на компонент.
+***************************************
+=======================================
+java.awt.GridВagConstraints
+=======================================
+* int grid.x, gridy
+	Задают начальный столбец и ряд для расположения ячейки. По умолчанию принимаются нулевые
+	значения.
+* int gridwidth, gridheight
+	Задают количество столбцов и рядов, занимаемых ячейкой. По умолчанию принимают значение 1.
+* double weightx, weighty
+	Определяют способность ячейки увеличиваться в размерах. По умолчанию принимают нулевое
+	значение.
+* int anchor
+	Задает вид выравнивания компонента в ячейке. Допускает указывать константы, определяющие
+	абсолютное расположение.
+* NORTНWEST NORTH NORTHEAST
+* WEST CENTER EAST
+* SOUТНWEST SOUTH SOUТHEAST
+	или константы, определяющие расположение независимо от ориентации:
+* FIRST LINE START LINE START FIRST LINE END
+* PAGE START
+* LAST LINE START
+* CENTER
+* LINE END
+* PAGE END
+* LAST LINE END
+	Вторая группа констант оказывается удобной в том случае, если приложение локализуется на языки,
+	где символы следуют справа налево или сверху вниз.
+* int fill
+	Задает способ заполнения ячейки компонентом. Допускаются значения NONE, вотн, HORIZONTAL
+	и VERRTICAL. По умолчанию принимается значение NONE.
+* int ipadx, ipady
+	Задает внутреннее заполнение вокруг компонента. По умолчанию принимают нулевое значение.
+* Insets insets
+	Задает внешнее заполнение вокруг границ ячейки. По умолчанию заполнение отсутствует.
+* GridВagConstraints (int gridx, int gridy, int gridwidth,
+* int gridheight, double weightx, douЬle weighty,
+* int anchor, int fill, Insets insets, int ipadx,int ipady)
+	Создает объект типа GridВagConstraints, заполняя все его поля указанными значениями. Этот
+	конструктор следует использовать только в программах автоматического построения GUI, поскольку
+	получаемый в итоге код труден для восприятия.
+***************************************
+=======================================
+java.awt.Layoutмanager
+=======================================
+* void addLayoutComponent(String name, Component comp)
+	Вводит компонент в текущую компоновку.
+* void removeLayoutComponent(Component сотр)
+	Удаляет компонент из текущей компоновки.
+* Dimension preferredLayoutSize(Container cont)
+	Возвращает рекомендуемые размеры контейнера, в котором выполняется текущая компоновка.
+* void layoutContainer (Container cont)
+	Располагает компоненты в контейнере.
+***************************************
+=======================================
+javax.swing.JOptionPane				ДИАЛОГОВЫЕ ОКНА
+=======================================
+* static void shoWМessageDialog(Component parent,
+		Object message, String title, int message7}'pe, Icon icon)
+* static void showМessageDialog(Component parent,
+		Object message, String title, int message7}'pe)
+* static void showМessageDialog(Component parent,
+		Object mвssage)
+* static void showinternalМessageDialog(Component parent,
+		Object message, String title, int message7}'pe, Icon icon)
+* static void showinternalМessageDialog(Component parent,
+		Object message, String title, int message7}'pe)
+* static void showinternalМessageDialog(Component parent, Object message)
+	Выводят на экран обычное диалоговое окно или внутреннее диалоговое окно для сообщения.
+	(Внутреннее диалоговое окно воспроизводится только в пределах фрейма.) Родительский компонент
+	может быть пустым (null). В качестве сообщения в диалоговом окне может быть выведена
+	символьная строка, пиктограмма. компонент или массив всех этих элементов. А в качестве
+	параметра message7}'pe может быть указана одна из следующих констант: ERROR МESSAGE,
+	INFORМATION_МESSAGE,WARNING_МESSAGE,QUESTION_МESSAGE,PLAIN_МESSAGE.
+* static int showConfirmDialog(Component parent,
+		Object message, String title, int option7}'pe,
+		int message7}'pe, Icon icon)
+* static int showConfirmDialog(Component parent,
+		Object message, String title, int option7}'pe,
+		int message7}'pe)
+* static int showConfirmDialog(Component parent,
+		Object message, String title, int option7}'pe)
+* static int showConfirmDialoq(Component parent,
+		Object message)
+* static int showinternalConfirmDialoq(Component parent,
+		OЬject message, Strinq title, int option7Y1'e, int message7Y1'e, Icon icon)
+* static int showinternalConfirmDialoq(Component parent,
+		Object message, Strinq title, int option7YPe,
+		int message7YPe)
+* static int showinternalConfirmDialoq(Component parent,
+		Object message, Strinq title, int option7YPe)
+* static int showinternalConfirmDialoq(Component parent,
+		Object message)
+	Отображают обычное или внутреннее диалоговое окно для подтверждения. !Внутреннее диалоговое
+	окно воспроизводится только в пределах фрейма.) Возвращают вариант, выбранный пользователем
+	!одну из следующих констант: ок _ OPTION, YES OPTION или NO OPTION), или же константу
+	CLOSED OPTION, если пользователь закрыл диалоговое окно. Родительский компонент может
+	быть пустьiМ (null). В качестве сообщения в диалоговом окне может быть выведена символьная
+	строка, пиктограмма, компонент или массив всех этих элементов. А в качестве параметра message7YPe
+	может быть указана одна из следующих констант: ERROR_НESSAGE, INFORНATION_
+	НESSAGE, WARNING_НESSAGE, QUESTION_НESSAGE, PLAIN_НESSAGE. и в качестве параметра
+	option7YPe может быть указана одна из таких констант: DEFAULT_OPTION, YES_NO_OPTION,
+	YES_NO_CANCEL_OPTION,OK_CANCEL_OPTION.
+* static int showOptionDialoq(Component parent, Object message,
+		Strinq title, int option7YPe, int message7YPe, Icon icon,
+		Object[] options, Object default)
+* static int showinternalOptionDialoq(Component parent,
+		Object message, Strinq title, int option7YPe,
+		int message7YPe, Icon icon, Object[] options, Object default)
+	Отображают обычное или внутреннее диалоговое окно для выбора разных вариантов. (Внутреннее
+	диалоговое окно воспроизводится только в пределах фрейма.) Возвращают индекс варианта,
+	выбранного пользователем, или же константу CLOSED OPTION, если пользователь закрыл диалоговое
+	окно. Родительский компонент может быть пустЫм (null). В качестве сообщения в диалоговом
+	окне может быть выведена символьная строка, пиктограмма, компонент или массив всех этих
+	элементов. В качестве параметра message7YPe может быть указана одна из следующих констант:
+	ERROR_НESSAGE,INFORНATION_НESSAGE,WARNING_НESSAGE,QUESTION_НESSAGE,PLAIN_
+	МESSAGE. А в качестве параметра option7YPe может быть указана одна из таких констант:
+	DEFAULT_OPTION, YES_NO_OPTION, YES_NO_CANCEL_OPTION, OK_CANCEL_OPTION. и в качестве
+	параметра options указывается массив символьных строк, пиктограмм или компонентов.
+* static Object showinputDialoq(Component parent,
+		Object message, Strinq title, int message7YPe,
+		Icon icon, Object[] values, Object default)
+* static Strinq showinputDialoq(Component parent,
+		Object message, Strinq title, int message7YPe)
+* static String showinputDialoq(Component parent,
+		Object message)
+* static String showinputDialog(Object message)
+		static String showinputDialog(Component parent,
+		Object message, Object de:faul t)
+* static String showinputDialog(Object message,
+		Object de:fault)
+	11.7. Диалоговые окна
+* static Object showinternalinputDialog(Component parent,
+		Object message, String title, int messageТype,
+		Icon icon, Object[] values, Object de:fault)
+* static String showinternalinputDialog(Component parent,
+		Object message, String title, int messageТype)
+* static String showinternalinputDialog(Component parent, Object message)
+	Отображают обычное или внутреннее диалоговое окно для ввода. !Внутреннее диалоговое окно
+	воспроизводится только в пределах фрейма.1 Возвращают символьную строку, введенную пользователем,
+	или же пустое значение null, если пользователь закрыл диалоговое окно . Родительский
+	компонент может быть пустым lnulll. В качестве сообщения в диалоговом окне может быть выведена
+	символьная строка, пиктограмма, компонент или массив всех этих элементов. А в качестве
+	параметра messageТype может быть указана одна из следующих констант : ERROR_МESSAGE,
+	INFORМATION_МESSAGE,WARNING_МESSAGE,QUESTION_МESSAGE,PLAIN_МESSAGE .
+
+***************************************
+=======================================
+javax.swing.JDialog
+=======================================
+* public JDialoq(Frame parent, String title , boolean modal)
+	Создает диалоговое окно, которое оказывается невидимым до тех пор, пока оно не будет показано
+	явным образом.
+***************************************
+=======================================
+javax.swing.SwingUtilities
+=======================================
+* Container getAncestorOfClass (Class с, Component сотр)
+	Возвращает наиболее глубоко вложенный родительский контейнер указанного компонента. принадлежащего
+	заданному классу или одному из его подклассов.
+***************************************
+=======================================
+javax.swing.JComponent
+=======================================
+* JRootpane getRootPane()
+	Определяет корневую панель, содержащую данный компонент. Если у компонента отсутствует
+	предшественник с корневой панелью, то возвращает пустое значение null.
+***************************************
+=======================================
+javax.swing.JRootPane
+=======================================
+* void setDefaul tвutton (JВutton button)
+	Устанавливает кнопку по умолчанию на данной корневой панели. Чтобы запретить доступ к кнопке
+	по умолчанию, этот метод вызывается с пустым значением null параметра button.
+
+***************************************
+=======================================
+javax.swing.JВutton
+=======================================
+* boolean isDefaultвutton()
+	Возвращает логическое значение true, если это кнопка, выбираемая по умолчанию на своей корневой
+	панели.
+***************************************
+=======================================
+javax.swing.JFileChooser
+=======================================
+* JFileChooser()
+	Создает диалоговое окно для выбора файлов, которое можно использовать во многих фреймах.
+* void setCurrentDirectory (File dir)
+	Задает исходный каталог, содержимое которого отображается в диалоговом окне для выбора файлов.
+* void setSelectedFile (File :file)
+* void setSelectedFiles (File [] :file)
+	Задают файл, выбираемый в диалоговом окне по умолчанию.
+* void setмultiSelectionEnaЫed(boolean Ь)
+	Устанавливает или отменяет режим выбора нескольких файлов.
+* void setFileSelectionМode(int mode)
+	Позволяет выбирать только файлы !по умолчанию!, только каталоги или же каталоги вместе с файлами.
+	Параметр mode может принимать следующие значения: JFileChooser. FILES ONLY,
+	JFileChooser. DIRECTORIES ONLY и JFileChooser. FILES AND DIRECTORIES.
+* int showOpenDialog(Component parent)
+* int showSaveDialog(Component parent)
+* int showDialog(Component parent, String approveВuttonText)
+	Отображают диалоговое окно с кнопкой подтверждения выбора, обозначенной меткой Ореп, Save
+	или произвольной меткой, указанной в символьной строке approveВuttonтext. Возвращают
+	следующие значения: APPROVE OPTION, CANCEL OPTION !если пользователь щелкнул на кнопке
+	Cancel или закрыл диалогов;;-е окно! или ERROR_ OPTION !если возникла ошибка!.
+* File getSelectedFile ()
+* File[] getSelectedFiles()
+	Возвращают файл или несколько файлов, выбранных пользователем, а если он ничего не выбрал
+	- пустое значение null.
+* void setFileFil ter (FileFil ter fil ter)
+	Устанавливает маску файлов в диалоговом окне для выбора файлов. В этом окне отображаются
+	только те файлы, для которых метод fil ter. accept () возвращает логическое значение true.
+	Кроме того, вводит фильтр в список выбираемых фильтров.
+* void addChoosaЫeFileFil ter (FileFil ter fil ter)
+	Вводит фильтр в список выбираемых фильтров.
+* void setAcceptAllFileFilterUsed(boolean Ы
+	Вводит все файлы в комбинированный список выбираемых фильтров или удаляет их из этого списка.
+* void resetChoosaЫeFileFilters()
+	Очищает список фильтров, где остается фильтр всех файлов, если только он не удален из списка
+	специально.
+* void setFileView (FileView view)
+	Устанавливает представление файлов для предоставления сведений о файлах, отображаемых
+	в диалоговом окне для выбора файлов.
+* void setAccessory(JComponent component)
+	Устанавливает вспомогательный компонент.
+***************************************
+=======================================
+avax.swing.filechooser.FileFilter
+=======================================
+* boolean accept (File f)
+	Возвращает логическое значение true, если указанный файл должен отображаться в диалоговом
+	окне.
+* String getDescription()
+	Возвращает описание указанного фильтра, например "Image files ( *. gif, *. jpeg) "
+	!Файлы изображений с расширением *. gif и *. jpegl.
+***************************************
+=======================================
+javax.swing.filechooser.FileNameExtensionFilter
+=======================================
+* FileNameExtensionFil ter (String description, String . . . extensions)
+	Конструирует фильтр файлов с заданным описанием, принимающий все каталоги и все файлы,
+	имена которых оканчиваются точкой и последующей символьной строкой одного из указанных расширений.
+***************************************
+=======================================
+javax.swing.filechooser.FileView
+=======================================
+* String getName (File .f)
+	Возвращает имя указанного файла :f или пустое значение null. Обычно возвращается результат
+	вызова метода f. getName () .
+* String getDescription (File .f)
+	Возвращает удобочитаемое описание указанного файла :f или пустое значение null. Так, если
+	указанный файл :f представляет собой НТМL-документ, этот метод может возвратить его заголовок.
+* String getТypeDescription (File .f)
+	Возвращает удобочитаемое описание типа указанного файла :t или пустое значение null. Так,
+	если указанный файл :f представляет собой НТМL-документ, этот метод может возвратить символьную
+	строку "Hypertext document".
+* Icon geticon (File .f)
+	Возвращает пиктограмму, назначенную для указанного файла :f, или пустое значение null. Так,
+	если указанный файл :f относится к формату JPEG, этот метод может возвратить пиктограмму с миниатюрным
+	видом его содержимого.
+* Boolean isTraversaЫe (File .f)
+	Если пользователь может открыть указанный каталог, возвращается значение Boolean. TRUE.
+	Если же каталог представляет собой составной документ, может быть возвращено значение
+	Boolean. FALSE. Подобно методам из класса FileView, этот метод может возвращать пустое
+	значение null, отмечая тот факт, что в диалоговом окне для выбора файлов должно быть использовано
+	представление файлов, устанавливаемое no умолчанию.
+***************************************

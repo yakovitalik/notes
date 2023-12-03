@@ -1,0 +1,3 @@
+Если у кого то возникли проблемы с созданием  проекта Java EE на 2020 версии
+ Ultimate(В создании проекта нет выбора Java EE) надо добавить в Help | Edit Custom Properties 
+ "javaee.legacy.project.wizard=true" без кавычек и перезапустить среду

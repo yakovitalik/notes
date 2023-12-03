@@ -1,0 +1,418 @@
+/////////////////////////////////////////////////////////////////////
+////////////////    РАБОТА с HIBERNATE //////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+=======================================
+Простое приложение(без Spring)
+=======================================
+
+В любом случае подключается JDBC драйвер: 
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.5.1</version>
+    </dependency>
+
+
+Потом подключается сам Hibernate:
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.4.28.Final</version>
+    </dependency>
+
+Затем в папке main создаем папку resources(с соответствующей меткой).
+В ней создаем файл hibernate.properties
+В нем описываем конфигурацию нашего JDBC драйвера и конфигурацию самого Hibernate.
+
+*********************************
+# Настраиваем источник данных (Data source)
+hibernate.driver_class=org.postgresql.Driver
+hibernate.connection.url=jdbc:postgresql://localhost:5432/hibernate_demo_db
+hibernate.connection.username=postgres
+hibernate.connection.password=postgres
+
+# Настраиваем сам Hibernate
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+hibernate.show_sql=true
+hibernate.current_session_context_class=thread
+*********************************
+Потом создаем пакет models, в нем свой класс(например Person).
+Данный класс соответсвует таблице в БД Person.
+Класс нужно пометить аннотацией @Entity (сущность в БД).
+А также желательно поставить аннотацию:
+@Table(name = "Person")
+Чтобы конкретнее соотнести класс с БД.
+
+Все классы с аннотацией @Entity должны содержать пустой конструктор и хотя бы одно поле с аннотацией id.
+Потом при помощи аннотации @Column надо сопоставить поля класса с столбцами таблицы.
+
+Затем в методе main приложения нужно создать класс конфигурации:
+Configuration configuration = new Configuration().addAnnotatedClass(Person.class); (из пакета Hibernate.cfg)
+
+Затем создаем SessionFactory:
+SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+И после этого создаем сессию:
+Session session = sessionFactory.getCurrentSession();
+
+Потом начинаем транзакцию:
+session.beginTransaction();
+
+// получаем сущность из таблицы
+Person person = session.get(Person.class, 1);
+
+После этого закрываем транзакцию
+session.getTransaction().commit();
+
+И после нужно закрыть SessionFactory:
+sessionFactory.close();
+
+******************************
+Внесение сущностей в БД
+******************************
+ try {
+            // начинаем транзакцию
+            session.beginTransaction();
+
+            // сюда пишем все что хотим внести в таблицу
+            Person person1 = new Person("Test1", 30);
+            Person person2 = new Person("Test2", 40);
+            Person person3 = new Person("Test3", 50);
+
+            // передаем объекты в базу данных
+            session.save(person1);
+            session.save(person2);
+            session.save(person3);
+
+            // закрываем транзакцию
+            session.getTransaction().commit();
+        } finally {
+            // закрываем SessionFactory
+            sessionFactory.close();
+        }
+		
+******************************
+Изменение сущностей в БД
+******************************
+
+Person person = session.get(Person.class, 2);
+person.setName("New name");
+
+Это изменит имя человека в БД. 
+******************************
+Удаление сущности из БД
+******************************
+
+Person person = session.get(Person.class, 2);
+session.delete(person);
+
+
+******************************
+Получение Id сохраненной сущности из БД
+******************************
+
+// начинаем транзакцию
+            session.beginTransaction();
+
+            Person person = new Person("Some name", 52);
+            session.save(person);
+
+            // закрываем транзакцию
+            session.getTransaction().commit();
+
+            System.out.println(person.getId());
+******************************
+
+=======================================
+Язык запросов HQL
+=======================================
+     Java класс   Поле класса
+FROM Person WHERE name = 'Test'					HQL
+
+              Таблица      Столбец
+SELECT * FROM Person WHERE name = 'Test'		SQL
+
+
+// этот запрос вернет всех людей из БД
+List<Person> people = session.createQuery("FROM Person ").getResultList();
+			
+			// выведем список
+            for (Person person : people) {
+                System.out.println(person);
+            }
+
+// этот запрос вернет всех людей из БД с возрастом выше 30 лет
+List<Person> people = session.createQuery("FROM Person WHERE age > 30").getResultList();
+
+Еще пример запроса (где имя похоже на)
+List<Person> people = session.createQuery("FROM Person WHERE name LIKE 'J%'").getResultList();
+
+// Меняем имя для людей меньше 40 лет на Test
+session.createQuery("update Person set name='Test' where age < 40").
+                    executeUpdate();
+
+// Удаляем людей, у которых возраст меньше 40 лет
+session.createQuery("delete from Person where age < 40").
+                    executeUpdate();
+
+=======================================
+Отношения один ко многим в Hibernate
+=======================================
+Скриншоты в папке, код в проекте hibernate5.
+
+=======================================
+Жизненный цикл сущности в Hibernate
+=======================================
+
+Объекты проходят через несколько состояний:
+
+Transient				Когда объект создан, но Hibernate его еще не остлеживает(вызов сеттеров не влияет на состояние БД)
+Persistent(Managed)		После вызова session.save(person) объект станет Persistent, отслеживаемым.  
+						Либо же когда объект получен из БД с помощью Hibernate. Находится там пока работает сессия. 
+						Вызов сеттера на Persistent объекте генерирует SQL код. 
+Detached				Объект перестает быть Persistent и покидает Persistent context. Т.е. становится обычным объектом, который 
+						Hibernate уже не остлеживает.
+Removed					Объект становится Removed когда мы на сессии вызываем метод removed(session.remove(person)).
+						Он становится помеченным на удаление и следующий commit() удалит его из базы данных. 
+						
+
+=======================================
+Каскадирование в Hibernate
+=======================================
+Проект hibernate6.
+Добавляем к родительскому(класс Person) элементу каскадирование (PERSIST)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    List<Item> items;
+И второе что нужно сделать это в сессии заменить метод session.save() на session.persist().
+Чтобы при сохранении человека в БД автоматом(каскадирование) создавался его item в БД.
+
+*************************************
+Каскадирование не PERSIST(на SAVE)
+*************************************
+
+В классе Person убираем cascade = CascadeType.PERSIST) в аннотации @OneToMany.
+Используем отдельную аннотацию Hibernate - @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE).
+
+После этого вызов метода save будет тоже каскадироваться.
+
+Так же в этой аннотации Cascade есть другие методы каскадирования.
+Например - .CascadeType.REMOVE. Т.е. если мы удалили человека, она удалит связанные с ним сущности.
+
+DETACH, REFRESH, и т.д. Там много вариантов. 
+Если мы хотим каскадировать сразу все операции - пишем .CascadeType.ALL.
+Тогда любая операция, которая будет производиться с этим человеком будет автоматически 
+каскадироваться на связанные с этим человеком товары. 
+Нам в основном нужна будет SAVE_UPDATE.
+
+=======================================
+Отношения один к одному в Hibernate
+=======================================
+
+В классе Passport задаем:
+    @Id
+    @OneToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
+	
+В классе Person задаем:
+	@OneToOne(mappedBy = "person")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private Passport passport;
+	
+Так же не забываем в классе самого приложения указать оба класса:
+Configuration configuration = new Configuration()
+                .addAnnotatedClass(Person.class).addAnnotatedClass(Passport.class);
+				
+И затем уже работаем с объектами внутри транзакции
+
+=======================================
+Отношения многие ко многим в Hibernate
+=======================================
+
+Для организации такой связи используются следующие аннотации:
+@ManyToMany и @JoinTable.
+
+В одну из сущностей(в классе), например Acter, помещяется:
+
+@Entity
+@Table(name = "Actor")
+public class Actor {
+	@ManyToMany
+	@JoinTable(name = "Actor_Movie, 
+			joinColumn = @JoinColumn(name = "actor_id),
+			inverseJoinColumns = @JoinColumn(name = "movie_id")
+	private List<Movie> movies;
+	
+Второй класс(Movie):
+
+@Entity
+@Table(name = "Movie")
+public class Movie {
+	@ManyToMany(mappedBy = "movies")
+	private List<Actor> actors;
+	
+Можно поместить JoinTable и в Movie, разницы нет. 
+Так как нет owning side(владеющей стороны), так как ни одна из сущностей не владеет внешним ключом. 
+
+=======================================
+Ленивая и неленивая загрузка
+=======================================
+FetchType
+
+*********************
+Eager(Полная, неленивая загрузка)
+*********************
+Связанные товары загружаются сразу:
+
+@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+private List<Item> items;
+
+*********************
+Lazy(ленивая загрузка)
+*********************
+Связанные товары загружаются только по запросу
+(например при вызове геттера)
+
+@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+private List<Item> items;
+
+===========================
+FetchType по умолчанию в HIBERNATE
+===========================
+
+@OneToMany			Lazy
+@ManyToOne			Eager
+@ManyToMany			Lazy
+@OneToOne			Eager
+
+*********************
+Особенности Lazy(ленивая загрузка)
+*********************
+Мы можем подгружать связанные сущности только находясь внутри транзакции.
+Т.е. сущность должна находиться в Persistent/Managed состоянии. 
+
+За пределами Hibernate сессии(Detached состояние) загрузить связанные сущности
+уже не получится.
+
+! Для загрузки ленивых сущностей, чтобы можно было с ними работать за пределами сессии
+используется метод Hibernate.initialize():
+Hibernate.initialize(person.getItems());
+
+
+===========================
+Spring MVC Проект с HIBERNATE
+===========================
+
+Добавляем зависимости:
+
+<dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.4.28.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+	
+Нужно добавить в папку Resources файл hibernate.properties(с конфигурацией Hibernate):
+Содержание:
+# Data source configures
+hibernate.driver_class=org.postgresql.Driver
+hibernate.connection.url=jdbc:postgresql://localhost:5432/hibernate_demo_db
+hibernate.connection.username=postgres
+hibernate.connection.password=postgres
+
+# Hibernate configures
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+hibernate.show_sql=true
+hibernate.current_session_context_class=thread
+***
+
+Затем в конфигурационном классе SpringConfig на классе добавить аннотации:
+
+@PropertySource("classpath:hibernate.properties")
+@EnableTransactionManagement
+
+В целом будет выглядеть так:
+@Configuration
+@ComponentScan("ru.yakovitalik.springcourse")
+@EnableWebMvc
+@PropertySource("classpath:hibernate.properties")
+@EnableTransactionManagement
+public class SpringConfig implements WebMvcConfigurer {
+***
+
+Там же в конфигурационном файле настраиваем нормально 
+@Bean
+public DataSource dataSource() делаем чтобы данные брались из файла.
+
+		// задаем параметры нашей базы данных
+        dataSource.setDriverClassName(environment.getRequiredProperty("hibernate.driver_class"));
+        dataSource.setUrl(environment.getProperty("hibernate.connection.url"));
+        dataSource.setUsername(environment.getProperty("hibernate.connection.username"));
+        dataSource.setPassword(environment.getProperty("hibernate.connection.password"));
+	
+Так же в класс SpringConfig добавляем методы, связывающие наш Java код с Hibernate:
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+
+        return properties;
+    }
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan("ru.yakovitalik.springcourse.models");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+
+        return sessionFactory;
+    }
+
+    @Bean
+    public PlatformTransactionManager hibernateTransactionManager() {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+
+        return transactionManager;
+    }
+
+При этом JDBC template убираем или закомментируем, так как он уже там не нужен.
+Бывает в сложных приложениях используется и JDBC template и Hibernate.
+
+В спринг приложении мы по другому работаем с транзакциями.
+Мы не вызываем метода beginTransaction.
+Вместо этого мы используем специальную аннотацию @Transactional.
+Если в этой транзакции мы только читаем данные, то добавляем аргумент: @Transactional(readOnly = true)
+
+    @Transactional
+    public List<Person> index() {
+        // получаем сессию, и на этой сессии автоматически будет открыта транзакция
+        Session session = sessionFactory.getCurrentSession();
+
+        // Здесь будем писать наш обычный Hibernate-код
+
+        return null;
+    }
+	
+Так же не забываем, что наш класс должен быть сущностью.
+
+
+
+
+
+
+
+
+
+
+
+
