@@ -94,7 +94,139 @@ docker build . -t time-app-frontend
 ***
 После этого уже можно запустить контейнер с frontend приложением:
 docker run -p 3000:3000 time-app-frontend
+
 ***
+
+Пример Dockerfile для бэкенд сервиса(node)
+***
+FROM node:alpine
+
+WORKDIR /app
+
+EXPOSE 5000
+
+COPY package* ./
+
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "dev"]
+***
+Далее создаем образ из Dockerfile:
+docker build . -t time-app-backend
+
+
+Затем запускаем контейнер:
+docker run -p 5000:5000 time-app-backend
+
+======================================================
+СОЗДАНИЕ DOCKER COMPOSE FILE для FRONTEND и BACKEND
+======================================================
+
+Пример указания образов:
+***
+version: '3'
+
+services:
+  frontend: 
+    build: ./frontend
+  api:
+    build: ./api
+  mysql:
+    image: mysql
+  adminer:
+    image: adminer
+***
+
+-----------------------
+Добавление портов:
+***
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '3333:3000'
+  api:
+    build: ./api
+    ports:
+      - '5555:5000'
+  mysql:
+    image: mysql
+  adminer:
+    image: adminer
+    ports:
+      - '8888:8080'
+***
+-----------------------
+Добавление переменных окружения:
+mysql:
+    image: mysql
+	...
+	environment:
+	  MYSQL_ROOT_PASSWORD: password
+	  MYSQL_DATABASE: time_db
+-----------------------
+
+Запуск контейнера с переменной окружения(без Compose):
+docker run -d -e MY_ENV_VARIABLE=test nginx
+
+***
+
+ИТОГОВЫЙ ФАЙЛ для 4 сервисов:
+***
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '3333:3000'
+  api:
+    build: ./api
+    ports:
+      - '5555:5000'
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: time_db
+  adminer:
+    image: adminer
+    ports:
+      - '8888:8080'
+***
+
+После заполнения файла docker-compose.yml
+переходим в терминале в папку приложения(time-app)
+и вводим:
+docker-compose up
+
+***
+
+Для того, чтобы контейнеры автоматически запускались после остановки добавляем опцию
+в docker-compose.yml файл:
+restart: always
+***
+Для добавления зависимостей одного сервиса от другого:
+    depends_on:
+      - mysql
+Это сделает так, что сначала запустится контейнер mysql, а затем api
+***
+После изменения образа какого либо контейнера и yml файла нужно вводить
+docker compose up --build
+для запуска контейнеров с пересборкой
+
+Итоговый:
+***
+
+***
+
+
+
+
 
 
 
