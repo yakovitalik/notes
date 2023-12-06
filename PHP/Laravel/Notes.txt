@@ -1,0 +1,3 @@
+Создание проекта Laravel:
+$ composer create-project laravel/laravel bboard "9.1.*"
+
