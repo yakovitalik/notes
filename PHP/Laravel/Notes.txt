@@ -1,3 +1,12 @@
 Создание проекта Laravel:
 $ composer create-project laravel/laravel bboard "9.1.*"
 
+Установка библиотеки laravel/ui - в папке проекта ввести:
+$ composer require laravel/ui
+
+Запуск проекта на отладочном сервере:
+$ php artisan serve
+
+Создание контроллера:
+$ php artisan make:controller BbsController
+

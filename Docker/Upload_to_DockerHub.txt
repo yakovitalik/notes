@@ -1,0 +1,45 @@
+Находясь в папке проекта пишем в терминале:
+$ docker build -t yakovitalik/time-app-frontend-dev .
+Потребуется ввести пароль
+
+А затем:
+$ docker push yakovitalik/time-app-frontend-dev
+
+Создание приложения из образов с DockerGub. 
+Создаем отдельный docker-compose.yml файл:
+***
+version: '3'
+
+services:
+  frontend:
+    image: yakovitalik/time-app-frontend-dev
+    restart: always
+    ports:
+      - '3000:3000'
+  api:
+    image: yakovitalik/time-app-backend-dev
+    restart: always
+    ports:
+      - '5555:5000'
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: time_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8888:8080'
+volumes:
+  mysql_data:
+***
+
+Для запуска именно с этого нового yaml файла вводим в терминале:
+$ docker-compose -f docker-compose.pub.yml up -d
+
