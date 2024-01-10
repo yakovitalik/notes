@@ -1,0 +1,12 @@
+===================================
+Зависимость для проекта на Maven
+===================================
+	<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
+Этот модуль уже содержит hibernate-core и заглушки интерфейсов java persistance
+===================================
+
+

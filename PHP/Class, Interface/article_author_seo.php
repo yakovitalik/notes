@@ -7,7 +7,7 @@ class Article extends Topic implements Author, Seo {
 	public $authors;
 	public $seo_title;
 	private $seo_description;
-	private seo_keywords;
+	private $seo_keywords;
 	
 	public function getAuthor()
 	{
